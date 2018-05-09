@@ -21,44 +21,44 @@ step 1 setting jmongo.properties in resources and class path
 step 2 define Entity
 -----------------------
 
-import com.lamfire.jmongo.annotations.*;
+    import com.lamfire.jmongo.annotations.*;
 
-@Indexes(value={@Index(value = "nickname_age_index",fields = {@Field(value = "nickname"),@Field(value = "age")})})
-@Entity
-public class User {
-    @Id
-    private String id;
+    @Indexes(value={@Index(value = "nickname_age_index",fields = {@Field(value = "nickname"),@Field(value = "age")})})
+    @Entity
+    public class User {
+        @Id
+        private String id;
 
-    @Indexed
-    private String nickname;
+        @Indexed
+        private String nickname;
 
-    @Indexed
-    private int age;
+        @Indexed
+        private int age;
 
-    public String getId() {
-        return id;
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getNickname() {
+            return nickname;
+        }
+
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
     }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-}
 
 step 3 Using DAO template
 ------------------
