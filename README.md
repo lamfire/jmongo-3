@@ -65,8 +65,6 @@ step 3 Using DAO template
     User user = new User();
     user.setId("10001");
     user.setAge(18);
-    user.setUsername("lamfire");
-    user.setPassword("password");
 
     DAO<User,String> dao = JMongo.getDAO("db0","UserDB","User", User.class);
 
@@ -93,8 +91,6 @@ No use configure file
     User user = new User();
     user.setId("10001");
     user.setAge(18);
-    user.setUsername("lamfire");
-    user.setPassword("password");
 
     //get dao instance
     DAO<User,String> dao = JMongo.getDAO("db1","test",User.class);
