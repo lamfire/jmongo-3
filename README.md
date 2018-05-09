@@ -97,7 +97,7 @@ No use configure file
     user.setPassword("password");
 
     //get dao instance
-    DAO<User,String> dao = DAOFactory.get("db1","test",User.class);
+    DAO<User,String> dao = JMongo.getDAO("db1","test",User.class);
 
     //save
     dao.save(user);
