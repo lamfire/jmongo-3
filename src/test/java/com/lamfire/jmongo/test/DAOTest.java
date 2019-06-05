@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class DAOTest {
     public static void main(String[] args) {
-        DAO<User,String> dao = new UserDAO();
+        UserDAO dao = new UserDAO();
 
         long count = dao.count();
         System.out.println("count : " + count);
@@ -43,7 +43,8 @@ public class DAOTest {
         Asserts.equalsAssert(ip,dao.getFieldValue(id,"ip"));
 
 
-
+        user = dao.get(id);
+        System.out.println("user: " + JSON.toJSONString(user));
 
         dao = new UserDAO();
 
