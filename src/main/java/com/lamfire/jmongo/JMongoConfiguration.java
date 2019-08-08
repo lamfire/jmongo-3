@@ -124,6 +124,11 @@ public class JMongoConfiguration {
 		String 	maxConnectionIdleTime = conf.get("maxConnectionIdleTime");
 		String maxConnectionLifeTime = conf.get("maxConnectionLifeTime");
 
+
+		String auth = conf.get("auth");
+		String 	user = conf.get("user");
+		String password = conf.get("password");
+
 		if(!isBlank(connectionsPerHost)){
 			opts.setConnectionsPerHost(Integer.parseInt(connectionsPerHost));
 		}
@@ -167,6 +172,14 @@ public class JMongoConfiguration {
 		if(!isBlank(maxConnectionLifeTime)){
 			opts.setMaxConnectionLifeTime(Integer.parseInt(maxConnectionLifeTime));
 		}
+
+		if(!isBlank(auth)){
+			opts.setAuth(Boolean.valueOf(auth));
+		}
+
+		opts.setUser(user);
+		opts.setPassword(password);
+
 		return opts;
 	}
 }

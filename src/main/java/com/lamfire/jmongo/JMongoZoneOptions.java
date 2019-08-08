@@ -12,6 +12,9 @@ public class JMongoZoneOptions {
     protected final List<ServerAddress> seeds = new ArrayList<ServerAddress>();
     protected final MongoClientOptions.Builder optsBuilder = new MongoClientOptions.Builder();
     protected String zone;
+    private boolean auth = false;
+    private String user;
+    private String password;
 
     public JMongoZoneOptions(String zone){
         this.zone = zone;
@@ -98,5 +101,29 @@ public class JMongoZoneOptions {
 
     public void setMaxConnectionLifeTime(int maxConnectionLifeTime) {
         optsBuilder.maxConnectionLifeTime(maxConnectionLifeTime);
+    }
+
+    public boolean isAuth() {
+        return auth;
+    }
+
+    public void setAuth(boolean auth) {
+        this.auth = auth;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

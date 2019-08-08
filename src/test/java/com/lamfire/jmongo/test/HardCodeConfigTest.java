@@ -15,8 +15,11 @@ public class HardCodeConfigTest {
     public static void main(String[] args) throws UnknownHostException {
         String zone = "hardcodeDB";
         JMongoZoneOptions options = new JMongoZoneOptions(zone);
-        options.addHost("10.18.98.228:34300");
+        options.addHost("192.168.56.11:27017");
         options.setConnectionsPerHost(4);
+        options.setAuth(true);
+        options.setUser("root");
+        options.setPassword("123456");
         JMongo.registerZoneOptions(options);
 
         DAO<User,String> userDAO  = JMongo.getDAO(zone,"HardCodeDB","User", User.class);

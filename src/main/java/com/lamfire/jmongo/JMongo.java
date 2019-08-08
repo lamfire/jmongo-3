@@ -35,31 +35,17 @@ public class JMongo {
 
     public static synchronized MongoClient getMongoClient(String zone){
         JMongoZoneRegistry registry = JMongoZoneRegistry.getInstance();
-        MongoClient mongo =  registry.getMongoClient(zone);
-        if(mongo == null){
+
+        if(!registry.exists(zone)){
             JMongoZoneOptions opts = JMongoConfiguration.getInstance().getJMongoOptions(zone);
             if(opts == null) {
                 throw new RuntimeException("The zone[" + zone + "] settings not found at 'jmongo.properties'");
             }
             registerZoneOptions(opts);
-            mongo = registry.getMongoClient(zone);
         }
-        return mongo;
+        return registry.getMongoClient(zone);
     }
 
-    public static synchronized MongoClient getMongoClient(String zone,String username,String password){
-        JMongoZoneRegistry registry = JMongoZoneRegistry.getInstance();
-        MongoClient mongo =  registry.getMongoClient(zone);
-        if(mongo == null){
-            JMongoZoneOptions opts = JMongoConfiguration.getInstance().getJMongoOptions(zone);
-            if(opts == null) {
-                throw new RuntimeException("The zone[" + zone + "] settings not found at 'jmongo.properties'");
-            }
-            registerZoneOptions(opts);
-            mongo = registry.getMongoClient(zone);
-        }
-        return mongo;
-    }
 
     public static synchronized Mapping getMapping(String zone,String dbName){
         String key = String.format("%s:%s",zone,dbName);

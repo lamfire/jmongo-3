@@ -1,8 +1,12 @@
 package com.lamfire.jmongo;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,14 +35,23 @@ public class JMongoZoneRegistry {
         }
 
 
-        mongo =  new MongoClient(opts.seeds,opts.getMongoClientOptions());
+        if(opts.isAuth()) {
+            List<MongoCredential> credentials = new ArrayList<MongoCredential>();
+            credentials.add(MongoCredential.createCredential(opts.getUser(), "admin", opts.getPassword().toCharArray()));
+            mongo = new MongoClient(opts.seeds, credentials, opts.getMongoClientOptions());
+        }else{
+            mongo = new MongoClient(opts.seeds, opts.getMongoClientOptions());
+        }
 
-        //mongo.setReadPreference(ReadPreference.secondaryPreferred());
-        //mongo.setWriteConcern(WriteConcern.NORMAL);
         pool.put(zone, mongo);
     }
 
     public MongoClient getMongoClient(String zone){
-        return pool.get(zone);
+        MongoClient client =  pool.get(zone);
+        return client;
+    }
+
+    public boolean exists(String zone){
+        return pool.containsKey(zone);
     }
 }

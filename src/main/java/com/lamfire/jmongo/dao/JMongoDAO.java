@@ -11,8 +11,6 @@ import java.util.*;
 
 
 public class JMongoDAO<T, K> implements DAO<T, K> {
-
-    private String zone;
     private String dbName;
     private String colName;
     protected Class<T> entityClazz;
@@ -21,17 +19,19 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     private Mapping mapping;
     private JmongoDataStore ds;
 
-
-    public JMongoDAO(final String zone, final String dbName,String colName ,final Class<T> entityClass) {
-        this.zone  =zone;
+    public JMongoDAO(final MongoClient client,Mapping mapping, final String dbName,String colName ,final Class<T> entityClass) {
         this.dbName = dbName;
         this.colName = colName;
         this.entityClazz = entityClass;
 
-        this.mongoClient = JMongo.getMongoClient(zone);
-        this.mapping = JMongo.getMapping(zone,dbName);
+        this.mongoClient = client;
+        this.mapping = mapping;
 
         init();
+    }
+
+    public JMongoDAO(final String zone, final String dbName,String colName ,final Class<T> entityClass) {
+        this(JMongo.getMongoClient(zone),JMongo.getMapping(zone,dbName),dbName,colName,entityClass);
     }
 
     protected void init() {
