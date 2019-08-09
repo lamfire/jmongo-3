@@ -37,7 +37,7 @@ public class JMongoZoneRegistry {
 
         if(opts.isAuth()) {
             List<MongoCredential> credentials = new ArrayList<MongoCredential>();
-            credentials.add(MongoCredential.createCredential(opts.getUser(), "admin", opts.getPassword().toCharArray()));
+            credentials.add(MongoCredential.createCredential(opts.getUser(), opts.getDatabase(), opts.getPassword().toCharArray()));
             mongo = new MongoClient(opts.seeds, credentials, opts.getMongoClientOptions());
         }else{
             mongo = new MongoClient(opts.seeds, opts.getMongoClientOptions());

@@ -128,6 +128,7 @@ public class JMongoConfiguration {
 		String auth = conf.get("auth");
 		String 	user = conf.get("user");
 		String password = conf.get("password");
+		String database = conf.get("database");
 
 		if(!isBlank(connectionsPerHost)){
 			opts.setConnectionsPerHost(Integer.parseInt(connectionsPerHost));
@@ -179,6 +180,7 @@ public class JMongoConfiguration {
 
 		opts.setUser(user);
 		opts.setPassword(password);
+		opts.setDatabase(database);
 
 		return opts;
 	}

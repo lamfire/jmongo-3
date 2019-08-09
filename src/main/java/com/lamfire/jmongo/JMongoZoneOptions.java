@@ -15,6 +15,7 @@ public class JMongoZoneOptions {
     private boolean auth = false;
     private String user;
     private String password;
+    private String database;
 
     public JMongoZoneOptions(String zone){
         this.zone = zone;
@@ -125,5 +126,13 @@ public class JMongoZoneOptions {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
+    public void setDatabase(String database) {
+        this.database = database;
     }
 }
