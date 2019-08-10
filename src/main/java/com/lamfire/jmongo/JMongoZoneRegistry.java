@@ -1,6 +1,7 @@
 package com.lamfire.jmongo;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 
 import java.lang.reflect.Array;
@@ -34,14 +35,9 @@ public class JMongoZoneRegistry {
             throw new RuntimeException("the zone was exists : " + zone);
         }
 
+        MongoClientURI uri = new MongoClientURI(opts.getConnectionUri());
 
-        if(opts.isAuth()) {
-            List<MongoCredential> credentials = new ArrayList<MongoCredential>();
-            credentials.add(MongoCredential.createCredential(opts.getUser(), opts.getDatabase(), opts.getPassword().toCharArray()));
-            mongo = new MongoClient(opts.seeds, credentials, opts.getMongoClientOptions());
-        }else{
-            mongo = new MongoClient(opts.seeds, opts.getMongoClientOptions());
-        }
+        mongo = new MongoClient(uri);
 
         pool.put(zone, mongo);
     }

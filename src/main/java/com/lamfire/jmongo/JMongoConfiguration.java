@@ -106,100 +106,13 @@ public class JMongoConfiguration {
 			return null;
 		}
 		LOGGER.info("[BUILDING '"+zone+"']:"+conf.toString());
-		JMongoZoneOptions opts = new JMongoZoneOptions(zone);
-		String servers = conf.get("servers");
+
+		String connectionUri = conf.get("connectionUri");
 		
-		if(servers == null || "".equals(servers)){
-			throw new RuntimeException("the property '"+zone+".servers' was required,please check config file 'jmongo.properties'.");
-		}
-		
-		try {
-			if(!isMongoUri(servers)) {// not uri
-				opts.addHosts(servers);
-				String auth = conf.get("auth");
-				String 	user = conf.get("user");
-				String password = conf.get("password");
-				String database = conf.get("database");
-				if(!isBlank(auth)){
-					opts.setAuth(Boolean.valueOf(auth));
-				}
-				opts.setUser(user);
-				opts.setPassword(password);
-				opts.setDatabase(database);
-			}else{//is uri
-				MongoClientURI uri = new MongoClientURI(servers);
-				opts.addHosts(uri.getHosts());
-				opts.setUser(uri.getUsername());
-				opts.setPassword(new String(uri.getPassword()));
-				opts.setDatabase(uri.getDatabase());
-				if(opts.getUser() != null){
-					opts.setAuth(true);
-				}
-			}
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
-		
-		String connectionsPerHost = conf.get("connectionsPerHost");
-		String connectTimeout=conf.get("connectTimeout");
-		String maxWaitTime=conf.get("maxWaitTime");
-		String socketTimeout=conf.get("socketTimeout");
-		String socketKeepAlive=conf.get("socketKeepAlive");
-		String threadsAllowedToBlockForConnectionMultiplier = conf.get("threadsAllowedToBlockForConnectionMultiplier");
-
-		String minConnectionsPerHost = conf.get("minConnectionsPerHost");
-		String maxConnectionsPerHost = conf.get("maxConnectionsPerHost");
-		String serverSelectionTimeout = conf.get("serverSelectionTimeout");
-		String 	maxConnectionIdleTime = conf.get("maxConnectionIdleTime");
-		String maxConnectionLifeTime = conf.get("maxConnectionLifeTime");
-
-
-
-
-		if(!isBlank(connectionsPerHost)){
-			opts.setConnectionsPerHost(Integer.parseInt(connectionsPerHost));
-		}
-		
-		if(!isBlank(threadsAllowedToBlockForConnectionMultiplier)){
-			opts.setThreadsAllowedToBlockForConnectionMultiplier(Integer.parseInt(threadsAllowedToBlockForConnectionMultiplier));
-		}
-		
-		if(!isBlank(connectTimeout)){
-			opts.setConnectTimeout(Integer.parseInt(connectTimeout));
+		if(connectionUri == null || "".equals(connectionUri)){
+			throw new RuntimeException("the property '"+zone+".connectionUri' was required,please check config file 'jmongo.properties'.ex : 'mongodb://root:123456@192.168.56.11:27017/admin'");
 		}
 
-		if(!isBlank(maxWaitTime)){
-			opts.setMaxWaitTime(Integer.parseInt(maxWaitTime));
-		}
-		
-		if(!isBlank(socketTimeout)){
-			opts.setSocketTimeout(Integer.parseInt(socketTimeout));
-		}
-
-		if(!isBlank(socketKeepAlive)){
-			opts.setSocketKeepAlive(Boolean.parseBoolean(socketKeepAlive));
-		}
-
-		if(!isBlank(minConnectionsPerHost)){
-			opts.setMinConnectionsPerHost(Integer.parseInt(minConnectionsPerHost));
-		}
-
-		if(!isBlank(maxConnectionsPerHost)){
-			opts.setMaxConnectionsPerHost(Integer.parseInt(maxConnectionsPerHost));
-		}
-
-		if(!isBlank(serverSelectionTimeout)){
-			opts.setServerSelectionTimeout(Integer.parseInt(serverSelectionTimeout));
-		}
-
-		if(!isBlank(maxConnectionIdleTime)){
-			opts.setMaxConnectionIdleTime(Integer.parseInt(maxConnectionIdleTime));
-		}
-
-		if(!isBlank(maxConnectionLifeTime)){
-			opts.setMaxConnectionLifeTime(Integer.parseInt(maxConnectionLifeTime));
-		}
-
-		return opts;
+		return new JMongoZoneOptions(zone,connectionUri);
 	}
 }
