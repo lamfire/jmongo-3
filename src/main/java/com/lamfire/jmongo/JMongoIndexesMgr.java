@@ -26,7 +26,7 @@ public class JMongoIndexesMgr {
         return indexes.containsKey(key);
     }
 
-    public synchronized void ensureIndexes(Mongo mongo, JmongoDataStore ds, String colName, Class<?> entityClazz){
+    public synchronized void ensureIndexes(Mongo mongo, JMongoDataStore ds, String colName, Class<?> entityClazz){
         String key = getKey(mongo,ds,colName);
         if(indexes.containsKey(key)){
             return;

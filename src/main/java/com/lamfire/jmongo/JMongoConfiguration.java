@@ -3,6 +3,7 @@ package com.lamfire.jmongo;
 
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.logging.LoggerFactory;
+import com.mongodb.MongoClientURI;
 
 import java.io.InputStream;
 import java.net.UnknownHostException;
@@ -91,6 +92,13 @@ public class JMongoConfiguration {
 	public Map<String, JMongoZoneOptions> getAllMongoOpts(){
 		return Collections.unmodifiableMap(this.optsMap);
 	}
+
+	public boolean isMongoUri(final String addr){
+		if(addr != null && addr.toLowerCase().startsWith("mongodb://")){
+			return true;
+		}
+		return false;
+	}
 	
 	private JMongoZoneOptions buildMongoOpts(String zone){
 		Map<String, String> conf = confMap.get(zone);
@@ -99,14 +107,35 @@ public class JMongoConfiguration {
 		}
 		LOGGER.info("[BUILDING '"+zone+"']:"+conf.toString());
 		JMongoZoneOptions opts = new JMongoZoneOptions(zone);
-		String seeds = conf.get("servers");
+		String servers = conf.get("servers");
 		
-		if(seeds == null){
+		if(servers == null || "".equals(servers)){
 			throw new RuntimeException("the property '"+zone+".servers' was required,please check config file 'jmongo.properties'.");
 		}
 		
 		try {
-			opts.addHosts(seeds);
+			if(!isMongoUri(servers)) {// not uri
+				opts.addHosts(servers);
+				String auth = conf.get("auth");
+				String 	user = conf.get("user");
+				String password = conf.get("password");
+				String database = conf.get("database");
+				if(!isBlank(auth)){
+					opts.setAuth(Boolean.valueOf(auth));
+				}
+				opts.setUser(user);
+				opts.setPassword(password);
+				opts.setDatabase(database);
+			}else{//is uri
+				MongoClientURI uri = new MongoClientURI(servers);
+				opts.addHosts(uri.getHosts());
+				opts.setUser(uri.getUsername());
+				opts.setPassword(new String(uri.getPassword()));
+				opts.setDatabase(uri.getDatabase());
+				if(opts.getUser() != null){
+					opts.setAuth(true);
+				}
+			}
 		} catch (UnknownHostException e) {
 			throw new RuntimeException(e.getMessage(), e);
 		}
@@ -125,10 +154,7 @@ public class JMongoConfiguration {
 		String maxConnectionLifeTime = conf.get("maxConnectionLifeTime");
 
 
-		String auth = conf.get("auth");
-		String 	user = conf.get("user");
-		String password = conf.get("password");
-		String database = conf.get("database");
+
 
 		if(!isBlank(connectionsPerHost)){
 			opts.setConnectionsPerHost(Integer.parseInt(connectionsPerHost));
@@ -173,14 +199,6 @@ public class JMongoConfiguration {
 		if(!isBlank(maxConnectionLifeTime)){
 			opts.setMaxConnectionLifeTime(Integer.parseInt(maxConnectionLifeTime));
 		}
-
-		if(!isBlank(auth)){
-			opts.setAuth(Boolean.valueOf(auth));
-		}
-
-		opts.setUser(user);
-		opts.setPassword(password);
-		opts.setDatabase(database);
 
 		return opts;
 	}

@@ -39,6 +39,12 @@ public class JMongoZoneOptions {
         }
     }
 
+    public void addHosts(List<String> connects) throws UnknownHostException{
+        for(String s : connects){
+            addHost(s);
+        }
+    }
+
     public void addHosts(String seeds) throws UnknownHostException{
         String [] servers = seeds.split(",");
         addHosts(servers);

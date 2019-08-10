@@ -32,8 +32,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 
-public class JmongoDataStore implements AdvancedDatastore {
-    private static final Logger LOG = JmongoLoggerFactory.get(JmongoDataStore.class);
+public class JMongoDataStore implements AdvancedDatastore {
+    private static final Logger LOG = JmongoLoggerFactory.get(JMongoDataStore.class);
 
     private final Mapping mapping;
     private final MongoClient mongoClient;
@@ -47,16 +47,16 @@ public class JmongoDataStore implements AdvancedDatastore {
     private volatile QueryFactory queryFactory = new DefaultQueryFactory();
 
 
-    public JmongoDataStore(final Mapping mapping, final MongoClient mongoClient, final String dbName) {
+    public JMongoDataStore(final Mapping mapping, final MongoClient mongoClient, final String dbName) {
         this(mapping, mapping.getMapper(), mongoClient, dbName);
     }
 
 
-    public JmongoDataStore(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final String dbName) {
+    public JMongoDataStore(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final String dbName) {
         this(mapping, mapper, mongoClient, mongoClient.getDatabase(dbName));
     }
 
-    private JmongoDataStore(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final MongoDatabase database) {
+    private JMongoDataStore(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final MongoDatabase database) {
         this.mapping = mapping;
         this.mapper = mapper;
         this.mongoClient = mongoClient;
@@ -1402,6 +1402,7 @@ public class JmongoDataStore implements AdvancedDatastore {
                                                enforceWriteConcern(options, query.getEntityClass())
                                                    .getOptions()));
     }
+
 
     @SuppressWarnings("unchecked")
     private <T> UpdateResults update(final Query<T> query, final DBObject update, final boolean createIfMissing, final boolean multi,

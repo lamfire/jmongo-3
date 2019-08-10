@@ -17,7 +17,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
 
     private MongoClient mongoClient;
     private Mapping mapping;
-    private JmongoDataStore ds;
+    private JMongoDataStore ds;
 
     public JMongoDAO(final MongoClient client,Mapping mapping, final String dbName,String colName ,final Class<T> entityClass) {
         this.dbName = dbName;
@@ -35,7 +35,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     protected void init() {
-        ds = new JmongoDataStore(mapping,mongoClient, dbName);
+        ds = new JMongoDataStore(mapping,mongoClient, dbName);
         Mapper mapper = mapping.getMapper();
         mapper.addMappedClass(entityClazz);
         JMongoIndexesMgr.getInstance().ensureIndexes(this.mongoClient,ds,colName,entityClazz);
