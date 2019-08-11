@@ -1,5 +1,6 @@
 package com.lamfire.jmongo;
 
+import com.lamfire.jmongo.logging.Logger;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 
 public class JMongoZoneRegistry {
-
+    private static final Logger LOGGER = Logger.getLogger("JMongoZoneRegistry");
     private static final JMongoZoneRegistry instance = new JMongoZoneRegistry();
 
     public static JMongoZoneRegistry getInstance(){
@@ -27,18 +28,18 @@ public class JMongoZoneRegistry {
 
     public synchronized void register(JMongoZoneOptions opts){
         if(opts == null){
-            throw new RuntimeException("the parameter 'MongoOpts' cannot be null.");
+            return;
         }
         String zone = opts.getZone();
         MongoClient mongo = pool.get(zone);
         if(mongo != null){
-            throw new RuntimeException("the zone was exists : " + zone);
+            LOGGER.info("The zone was exists,closing - " + zone);
+            mongo.close();
         }
 
+        LOGGER.info("[REGISTER] {" + zone  +"} : " + opts.getConnectionUri());
         MongoClientURI uri = new MongoClientURI(opts.getConnectionUri());
-
         mongo = new MongoClient(uri);
-
         pool.put(zone, mongo);
     }
 

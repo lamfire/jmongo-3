@@ -14,9 +14,9 @@ import java.net.UnknownHostException;
 public class HardCodeConfigTest {
     public static void main(String[] args) throws UnknownHostException {
         String zone = "hardcodeDB";
-        String connUri = "mongodb://root:123456@192.168.56.11:27017/admin?connectionsPerHost=8&minConnectionsPerHost=8&maxConnectionsPerHost=64";
+        String connUri = "mongodb://root:123456@192.168.56.11:27017/admin";
         JMongoZoneOptions options = new JMongoZoneOptions(zone,connUri);
-        JMongo.registerZoneOptions(options);
+        JMongo.registerJMongoZoneOptions(options);
 
         DAO<User,String> userDAO  = JMongo.getDAO(zone,"HardCodeDB","User", User.class);
 

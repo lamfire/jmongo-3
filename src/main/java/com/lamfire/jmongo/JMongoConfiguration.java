@@ -7,11 +7,8 @@ import com.mongodb.MongoClientURI;
 
 import java.io.InputStream;
 import java.net.UnknownHostException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Properties;
 
 public class JMongoConfiguration {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JMongoConfiguration.class);
@@ -51,12 +48,10 @@ public class JMongoConfiguration {
 			LOGGER.error("Cannot open configure file : " + CONFIG_FILE);
             t.printStackTrace();
         }
-		//Map<String,String> map = PropertiesUtils.loadAsMap(CONFIG_FILE, Configuration.class);
 		for(Entry<Object,Object> e : properties.entrySet()){
 			String key = e.getKey().toString();
 			String val = e.getValue().toString();
-			LOGGER.info("[Configure]:" + key +" = " + val );
-			//String[] keys = StringUtils.split(key,".",2);
+			LOGGER.info("[FOUND] : " + key +" = " + val );
             String[] keys = key.split("\\.");
 			if(keys.length != 2){
 				continue;
@@ -80,7 +75,7 @@ public class JMongoConfiguration {
 		map.put(optKey, optVal);
 	}
 	
-	public JMongoZoneOptions getJMongoOptions(String zone){
+	public JMongoZoneOptions getJMongoZoneOptions(String zone){
 		JMongoZoneOptions opts = optsMap.get(zone);
 		if(opts == null){
 			opts = buildMongoOpts(zone);
@@ -88,8 +83,12 @@ public class JMongoConfiguration {
 		}
 		return opts;
 	}
+
+	public Collection<JMongoZoneOptions> getAllJMongoZoneOptions(){
+		return getAllJMongoZoneOptionsAsMap().values();
+	}
 	
-	public Map<String, JMongoZoneOptions> getAllMongoOpts(){
+	public Map<String, JMongoZoneOptions> getAllJMongoZoneOptionsAsMap(){
 		return Collections.unmodifiableMap(this.optsMap);
 	}
 
@@ -105,7 +104,7 @@ public class JMongoConfiguration {
 		if(conf == null){
 			return null;
 		}
-		LOGGER.info("[BUILDING '"+zone+"']:"+conf.toString());
+		LOGGER.info("[BUILDING] {"+zone+"'} : "+conf.toString());
 
 		String connectionUri = conf.get("connectionUri");
 		
