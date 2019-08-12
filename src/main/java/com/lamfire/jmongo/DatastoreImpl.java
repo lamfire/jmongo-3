@@ -32,8 +32,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 
-@Deprecated
-@SuppressWarnings("deprecation")
 public class DatastoreImpl implements AdvancedDatastore {
     private static final Logger LOG = JmongoLoggerFactory.get(DatastoreImpl.class);
 
@@ -48,14 +46,10 @@ public class DatastoreImpl implements AdvancedDatastore {
 
     private volatile QueryFactory queryFactory = new DefaultQueryFactory();
 
-
-    @Deprecated
     public DatastoreImpl(final Mapping mapping, final MongoClient mongoClient, final String dbName) {
         this(mapping, mapping.getMapper(), mongoClient, dbName);
     }
 
-
-    @Deprecated
     public DatastoreImpl(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final String dbName) {
         this(mapping, mapper, mongoClient, mongoClient.getDatabase(dbName));
     }
@@ -70,8 +64,6 @@ public class DatastoreImpl implements AdvancedDatastore {
         this.indexHelper = new IndexHelper(mapper, database);
     }
 
-
-    @Deprecated
     public DatastoreImpl copy(final String database) {
         return new DatastoreImpl(mapping, mapper, mongoClient, database);
     }

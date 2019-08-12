@@ -112,6 +112,59 @@ public class JMongoConfiguration {
 			throw new RuntimeException("the property '"+zone+".connectionUri' was required,please check config file 'jmongo.properties'.ex : 'mongodb://root:123456@192.168.56.11:27017/admin'");
 		}
 
-		return new JMongoZoneOptions(zone,connectionUri);
+		JMongoZoneOptions opts =  new JMongoZoneOptions(zone,connectionUri);
+
+		String connectionsPerHost = conf.get("connectionsPerHost");
+		String minConnectionsPerHost = conf.get("minConnectionsPerHost");
+		String connectTimeout=conf.get("connectTimeout");
+		String maxWaitTime=conf.get("maxWaitTime");
+		String socketTimeout=conf.get("socketTimeout");
+		String socketKeepAlive=conf.get("socketKeepAlive");
+		String threadsAllowedToBlockForConnectionMultiplier = conf.get("threadsAllowedToBlockForConnectionMultiplier");
+		String serverSelectionTimeout = conf.get("serverSelectionTimeout");
+		String 	maxConnectionIdleTime = conf.get("maxConnectionIdleTime");
+		String maxConnectionLifeTime = conf.get("maxConnectionLifeTime");
+
+		if(!isBlank(connectionsPerHost)){
+			opts.getBuilder().connectionsPerHost(Integer.parseInt(connectionsPerHost));
+		}
+
+		if(!isBlank(threadsAllowedToBlockForConnectionMultiplier)){
+			opts.getBuilder().threadsAllowedToBlockForConnectionMultiplier(Integer.parseInt(threadsAllowedToBlockForConnectionMultiplier));
+		}
+
+		if(!isBlank(connectTimeout)){
+			opts.getBuilder().connectTimeout(Integer.parseInt(connectTimeout));
+		}
+
+		if(!isBlank(maxWaitTime)){
+			opts.getBuilder().maxWaitTime(Integer.parseInt(maxWaitTime));
+		}
+
+		if(!isBlank(socketTimeout)){
+			opts.getBuilder().socketTimeout(Integer.parseInt(socketTimeout));
+		}
+
+		if(!isBlank(socketKeepAlive)){
+			opts.getBuilder().socketKeepAlive(Boolean.parseBoolean(socketKeepAlive));
+		}
+
+		if(!isBlank(minConnectionsPerHost)){
+			opts.getBuilder().minConnectionsPerHost(Integer.parseInt(minConnectionsPerHost));
+		}
+
+		if(!isBlank(serverSelectionTimeout)){
+			opts.getBuilder().serverSelectionTimeout(Integer.parseInt(serverSelectionTimeout));
+		}
+
+		if(!isBlank(maxConnectionIdleTime)){
+			opts.getBuilder().maxConnectionIdleTime(Integer.parseInt(maxConnectionIdleTime));
+		}
+
+		if(!isBlank(maxConnectionLifeTime)){
+			opts.getBuilder().maxConnectionLifeTime(Integer.parseInt(maxConnectionLifeTime));
+		}
+
+		return opts;
 	}
 }

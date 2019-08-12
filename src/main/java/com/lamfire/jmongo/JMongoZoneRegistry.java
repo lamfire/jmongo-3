@@ -38,7 +38,7 @@ public class JMongoZoneRegistry {
         }
 
         LOGGER.info("[REGISTER] {" + zone  +"} : " + opts.getConnectionUri());
-        MongoClientURI uri = new MongoClientURI(opts.getConnectionUri());
+        MongoClientURI uri = new MongoClientURI(opts.getConnectionUri(),opts.getBuilder());
         mongo = new MongoClient(uri);
         pool.put(zone, mongo);
     }
