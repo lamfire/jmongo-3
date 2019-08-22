@@ -25,12 +25,12 @@ class FieldCriteria extends AbstractCriteria {
     private final Object value;
     private final boolean not;
 
-    FieldCriteria(final QueryImpl<?> query, final String field, final FilterOperator op, final Object value) {
+    FieldCriteria(final Query<?> query, final String field, final FilterOperator op, final Object value) {
         this(query, field, op, value, false);
     }
 
     @SuppressWarnings("deprecation")
-    FieldCriteria(final QueryImpl<?> query, final String fieldName, final FilterOperator op, final Object value, final boolean not) {
+    FieldCriteria(final Query<?> query, final String fieldName, final FilterOperator op, final Object value, final boolean not) {
         //validate might modify prop string to translate java field name to db field name
         final StringBuilder sb = new StringBuilder(fieldName);
         final Mapper mapper = query.getDatastore().getMapper();

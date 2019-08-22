@@ -11,7 +11,7 @@ class GeoFieldCriteria extends FieldCriteria {
 
     private final Map<String, Object> opts;
 
-    GeoFieldCriteria(final QueryImpl<?> query, final String field, final FilterOperator op, final Object value,
+    GeoFieldCriteria(final Query<?> query, final String field, final FilterOperator op, final Object value,
                      final Map<String, Object> opts) {
         super(query, field, op, value);
         this.opts = opts;

@@ -17,13 +17,13 @@ import static com.lamfire.jmongo.query.FilterOperator.INTERSECTS;
 public class FieldEndImpl<T extends CriteriaContainerImpl> implements FieldEnd<T> {
     private static final Logger LOG = JmongoLoggerFactory.get(FieldEndImpl.class);
 
-    private final QueryImpl<?> query;
+    private final Query<?> query;
     private final String field;
     private final T target;
     private boolean not = false;
 
 
-    public FieldEndImpl(final QueryImpl<?> query, final String field, final T target) {
+    public FieldEndImpl(final Query<?> query, final String field, final T target) {
         this.query = query;
         this.field = field;
         this.target = target;

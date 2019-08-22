@@ -1,6 +1,7 @@
 package com.lamfire.jmongo.query;
 
 
+import com.lamfire.jmongo.Datastore;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.ReadPreference;
@@ -22,7 +23,7 @@ public interface Query<T> extends QueryResults<T>, Cloneable {
 
     Query<T> comment(String comment);
 
-    FieldEnd<? extends CriteriaContainerImpl> criteria(String field);
+    FieldEnd<? extends CriteriaContainer> criteria(String field);
 
     Query<T> disableCursorTimeout();
 
@@ -111,4 +112,11 @@ public interface Query<T> extends QueryResults<T>, Cloneable {
     Query<T> includeFieldsOnly(String... fields);
 
     Query<T> excludeFields(String... fields);
+
+    Datastore getDatastore();
+
+    boolean isValidatingNames();
+
+    boolean isValidatingTypes();
+
 }
