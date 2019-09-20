@@ -276,10 +276,9 @@ public class QueryImpl<T> extends CriteriaContainerImpl implements Query<T> {
     }
 
     @Override
-    public FieldEnd<? extends CriteriaContainerImpl> criteria(final String field) {
+    public FieldEnd<? extends CriteriaContainer> criteria(final String field) {
         final CriteriaContainerImpl container = new CriteriaContainerImpl(this, CriteriaJoin.AND);
         add(container);
-
         return new FieldEndImpl<CriteriaContainerImpl>(this, field, container);
     }
 
@@ -408,7 +407,6 @@ public class QueryImpl<T> extends CriteriaContainerImpl implements Query<T> {
     }
 
     @Override
-    @Deprecated
     public DBObject getQueryObject() {
         final DBObject obj = new BasicDBObject();
 

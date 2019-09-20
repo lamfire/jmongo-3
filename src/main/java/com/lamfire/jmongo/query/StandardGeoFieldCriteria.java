@@ -15,14 +15,14 @@ class StandardGeoFieldCriteria extends FieldCriteria {
     private final DBObject geometryAsDBObject;
     private CoordinateReferenceSystem crs;
 
-    StandardGeoFieldCriteria(final QueryImpl<?> query, final String field, final FilterOperator operator, final Geometry value,
+    StandardGeoFieldCriteria(final Query<?> query, final String field, final FilterOperator operator, final Geometry value,
                              final Integer maxDistanceMeters, final CoordinateReferenceSystem crs) {
         this(query, field, operator, value, maxDistanceMeters);
         this.crs = crs;
     }
 
     @SuppressWarnings("deprecation")
-    StandardGeoFieldCriteria(final QueryImpl<?> query, final String field, final FilterOperator operator, final Geometry value,
+    StandardGeoFieldCriteria(final Query<?> query, final String field, final FilterOperator operator, final Geometry value,
                              final Integer maxDistanceMeters) {
         super(query, field, operator, value);
         this.maxDistanceMeters = maxDistanceMeters;

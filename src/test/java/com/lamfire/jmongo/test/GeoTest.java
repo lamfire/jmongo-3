@@ -2,6 +2,10 @@ package com.lamfire.jmongo.test;
 
 import com.lamfire.jmongo.JMongo;
 import com.lamfire.jmongo.dao.DAO;
+import com.lamfire.jmongo.query.CriteriaContainer;
+import com.lamfire.jmongo.query.CriteriaContainerImpl;
+import com.lamfire.jmongo.query.CriteriaJoin;
+import com.lamfire.jmongo.query.Query;
 import com.lamfire.jmongo.test.entity.GeoEntity;
 import com.lamfire.json.JSON;
 
@@ -25,7 +29,9 @@ public class GeoTest {
             dao.save(e);
         }
 
-        List<GeoEntity> list = dao.createQuery().field("location").near(10,10).limit(5).asList();
+        Query<GeoEntity> query = dao.createQuery();
+        query.field("location").near(10,10,2).limit(5);
+        List<GeoEntity> list = query.asList();
         for(GeoEntity e : list){
             System.out.println(JSON.toJSONString(e));
         }
