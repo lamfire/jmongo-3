@@ -30,6 +30,8 @@ public interface DAO<T, K> {
 	Key<T> save(T entity, WriteConcern wc);
 
 	UpdateResults update(Query<T> q, UpdateOperations<T> ops);
+
+	UpdateResults update(K k, UpdateOperations<T> ops);
 	
 	UpdateResults  update(K k, String fieldName, Object value);
 	

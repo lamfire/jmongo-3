@@ -449,6 +449,12 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     @Override
+    public UpdateResults update(final K k, final UpdateOperations<T> ops) {
+        Query<T> q = ds.find(colName,entityClazz ,"_id",k);
+        return ds.update(q, ops);
+    }
+
+    @Override
     public UpdateResults update(K k, String fieldName, Object value) {
         return this.setFieldValue(k,fieldName,value);
     }
