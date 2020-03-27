@@ -15,9 +15,9 @@ public class CriteriaContainerImpl extends AbstractCriteria implements CriteriaC
     private CriteriaJoin joinMethod;
     private List<Criteria> children;
 
-    private QueryImpl<?> query;
+    private Query<?> query;
 
-    protected CriteriaContainerImpl(final QueryImpl<?> query, final CriteriaJoin joinMethod) {
+    protected CriteriaContainerImpl(final Query<?> query, final CriteriaJoin joinMethod) {
         this(joinMethod);
         this.query = query;
     }
@@ -124,12 +124,12 @@ public class CriteriaContainerImpl extends AbstractCriteria implements CriteriaC
     }
 
 
-    public QueryImpl<?> getQuery() {
+    public Query<?> getQuery() {
         return query;
     }
 
 
-    public void setQuery(final QueryImpl<?> query) {
+    public void setQuery(final Query<?> query) {
         this.query = query;
     }
 

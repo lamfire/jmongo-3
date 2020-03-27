@@ -168,7 +168,12 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
 
     @Override
     public T get(K id, String... fields) {
-        return ds.get(colName,entityClazz,id);
+        Query<T> q = createQuery();
+        q.includeFieldsOnly(fields);
+        q.field(Mapper.ID_KEY).equal(id);
+        List<T> list = q.asList();
+        if(list==null || list.isEmpty())return null;
+        return list.get(0);
     }
 
     @Override
