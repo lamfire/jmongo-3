@@ -4,7 +4,7 @@ This library provides clean and powerful mapping between Java POJOs and MongoDB 
 
 step 1 setting jmongo.properties in resources and class path
 -----------------------
-    db0.servers=10.18.98.228:27000
+    db0.connectionUri=mongodb://192.168.31.202:27017/admin
     db0.connectionsPerHost=64
     db0.threadsAllowedToBlockForConnectionMultiplier = 10
     db0.connectTimeout=60000
@@ -78,29 +78,13 @@ step 3 Using DAO template
     //query
     List<User> users = dao.createQuery().asList();
 
-No use configure file
+No use configure file sample
 ------------------
     //register mongodb host
     String zone = "db1";
-    JMongoZoneOptions options = new JMongoZoneOptions(zone);
-    options.addHost("10.18.98.228:27000");
-    options.setConnectionsPerHost(4);
+    String connUri = "mongodb://root:123456@192.168.56.11:27017/admin";
+    JMongoZoneOptions options = new JMongoZoneOptions(zone,connUri);
     JMongo.registerZoneOptions(options);
-
-    //new entity instance
-    User user = new User();
-    user.setId("10001");
-    user.setAge(18);
 
     //get dao instance
     DAO<User,String> dao = JMongo.getDAO("db1","test",User.class);
-
-    //save
-    dao.save(user);
-    System.out.println(dao.count());
-
-    //get
-    user = dao.get("10001");
-
-    //query
-    List<User> users = dao.createQuery().asList();
