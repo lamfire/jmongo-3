@@ -450,18 +450,18 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
 
     @Override
     public UpdateResults update(final Query<T> query, final UpdateOperations<T> ops) {
-        return ds.update(query, ops);
+        return ds.update(query, ops,false);
     }
 
     @Override
     public UpdateResults update(final K k, final UpdateOperations<T> ops) {
         Query<T> q = ds.find(colName,entityClazz ,"_id",k);
-        return ds.update(q, ops);
+        return ds.update(q, ops,false);
     }
 
     @Override
     public UpdateResults update(K k, String fieldName, Object value) {
-        return this.setFieldValue(k,fieldName,value);
+        return this.setFieldValue(k,fieldName,value,false);
     }
 
     @Override
@@ -472,12 +472,12 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
             ops.set(e.getKey(), e.getValue());
         }
         Query<T> q = ds.find(colName,entityClazz ,"_id",k);
-        return ds.update(q, ops);
+        return ds.update(q, ops,false);
     }
 
     @Override
     public UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> ops) {
-        return ds.update(query, ops, new UpdateOptions());
+        return ds.update(query, ops, false);
     }
 
     @Override
