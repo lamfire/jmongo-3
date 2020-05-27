@@ -29,6 +29,8 @@ public interface DAO<T, K> {
 
 	Key<T> save(T entity, WriteConcern wc);
 
+	UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation);
+
 	UpdateResults update(Query<T> q, UpdateOperations<T> ops);
 
 	UpdateResults update(K k, UpdateOperations<T> ops);
