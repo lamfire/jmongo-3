@@ -468,6 +468,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     public UpdateResults update(K k, Map<String, Object> fieldAndValMap) {
         Key<T> key = new Key<T>(entityClazz, colName, k);
         UpdateOperations<T> ops = this.ds.createUpdateOperations(entityClazz);
+        ops.disableValidation();
         for(Map.Entry<String,Object> e : fieldAndValMap.entrySet()){
             ops.set(e.getKey(), e.getValue());
         }
