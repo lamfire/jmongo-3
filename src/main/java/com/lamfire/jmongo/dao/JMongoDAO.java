@@ -215,14 +215,14 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     public void increment(K id, String fieldName) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps);
+        this.ds.update(q,uOps,true);
     }
 
     @Override
     public void decrement(K id, String fieldName) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps);
+        this.ds.update(q,uOps,true);
     }
 
     @Override
@@ -250,7 +250,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     public void increment(K id, String fieldName, Number val) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps);
+        this.ds.update(q,uOps,true);
     }
 
     @Override
@@ -488,6 +488,37 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     @Override
     public UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> ops) {
         return ds.update(query, ops, false);
+    }
+
+    public UpdateResults update(final Query<T> query, final UpdateOperations<T> ops,boolean createIfMissing) {
+        return ds.update(query, ops,createIfMissing);
+    }
+
+    public UpdateResults update(final K k, final UpdateOperations<T> ops,boolean createIfMissing) {
+        Query<T> q = ds.find(colName,entityClazz ,"_id",k);
+        return ds.update(q, ops,createIfMissing);
+    }
+
+    public UpdateResults update(K k, String fieldName, Object value,boolean createIfMissing) {
+        return this.setFieldValue(k,fieldName,value,createIfMissing);
+    }
+    public UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing) {
+        Key<T> key = new Key<T>(entityClazz, colName, k);
+        UpdateOperations<T> ops = this.ds.createUpdateOperations(entityClazz);
+        if(fieldValidation){
+            ops.enableValidation();
+        }else{
+            ops.disableValidation();
+        }
+        for(Map.Entry<String,Object> e : fieldAndValMap.entrySet()){
+            ops.set(e.getKey(), e.getValue());
+        }
+        Query<T> q = ds.find(colName,entityClazz ,"_id",k);
+        return ds.update(q, ops,createIfMissing);
+    }
+
+    public UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> ops,boolean createIfMissing) {
+        return ds.update(query, ops, createIfMissing);
     }
 
     @Override
