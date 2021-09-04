@@ -494,6 +494,10 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return ds.update(query, ops,createIfMissing);
     }
 
+    public UpdateResults update(final Query<T> query, final UpdateOperations<T> ops,boolean createIfMissing,boolean multi) {
+        return ds.update(query, ops,createIfMissing,multi);
+    }
+
     public UpdateResults update(final K k, final UpdateOperations<T> ops,boolean createIfMissing) {
         Query<T> q = ds.find(colName,entityClazz ,"_id",k);
         return ds.update(q, ops,createIfMissing);
