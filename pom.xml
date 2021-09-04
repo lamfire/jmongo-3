@@ -6,7 +6,7 @@
 
     <groupId>com.lamfire</groupId>
     <artifactId>jmongo</artifactId>
-    <version>3.4.3</version>
+    <version>3.4.4</version>
 
 
     <dependencies>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.lamfire</groupId>
             <artifactId>lamfire</artifactId>
-            <version>2.3.29</version>
+            <version>2.3.32</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -109,7 +109,7 @@
         <repository>
             <id>lamfire</id>
             <name>lamfire-respository</name>
-            <url>http://m2.lamfire.com:8081/nexus/content/repositories/lamfire/</url>
+            <url>http://www.avator.cn:8081/nexus/content/repositories/lamfire/</url>
         </repository>
     </distributionManagement>
 </project>
