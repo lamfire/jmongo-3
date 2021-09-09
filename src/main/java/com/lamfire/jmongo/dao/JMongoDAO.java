@@ -211,6 +211,12 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return this.ds.findAndModify(q, uOps);
     }
 
+    public T decrementAndGet(K id, String fieldName,Number val) {
+        Query<T> q = this.ds.find(colName,entityClazz, "_id", id);
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName,val);
+        return this.ds.findAndModify(q, uOps);
+    }
+
     @Override
     public void increment(K id, String fieldName) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName);
@@ -248,6 +254,18 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     @Override
     public T decrementAndGet(K id, String fieldName, String... includeFields) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName);
+        Query<T> q = ds.find(colName,entityClazz ,"_id",id).includeFieldsOnly(includeFields);
+        return this.ds.findAndModify(q, uOps);
+    }
+
+    public T incrementAndGet(K id, String fieldName, Number val,String... includeFields) {
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
+        Query<T> q = ds.find(colName,entityClazz ,"_id",id).includeFieldsOnly(includeFields);
+        return this.ds.findAndModify(q, uOps);
+    }
+
+    public T decrementAndGet(K id, String fieldName, Number val,String... includeFields) {
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName,val);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id).includeFieldsOnly(includeFields);
         return this.ds.findAndModify(q, uOps);
     }
