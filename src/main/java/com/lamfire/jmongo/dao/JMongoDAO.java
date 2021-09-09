@@ -225,6 +225,12 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         this.ds.update(q,uOps,true);
     }
 
+    public void decrement(K id, String fieldName,Number val) {
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName,val);
+        Query<T> q = ds.find(colName,entityClazz ,"_id",id);
+        this.ds.update(q,uOps,true);
+    }
+
     @Override
     public T incrementAndGet(K id, String fieldName, Number val) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
