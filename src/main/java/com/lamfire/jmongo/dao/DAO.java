@@ -93,15 +93,23 @@ public interface DAO<T, K> {
 
 	void increment(K id, String fieldName);
 
-	void decrement(K id, String fieldName);
-	
+	void increment(K id, String fieldName, Number val);
+
 	T incrementAndGet(K id, String fieldName, Number val);
-	
+
 	T incrementAndGet(K id, String fieldName, String... includeFields);
+
+	T incrementAndGet(K id, String fieldName, Number val,String... includeFields);
+
+	void decrement(K id, String fieldName);
+
+	void decrement(K id, String fieldName, Number val);
+
+	T decrementAndGet(K id, String fieldName, Number val);
 
 	T decrementAndGet(K id, String fieldName, String... includeFields) ;
 
-	void increment(K id, String fieldName, Number val);
+	T decrementAndGet(K id, String fieldName, Number val,String... includeFields);
 
 	List<Object> distinct(String fieldName);
 
