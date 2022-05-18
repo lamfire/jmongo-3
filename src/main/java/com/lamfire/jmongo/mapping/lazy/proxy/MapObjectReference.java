@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.mapping.lazy.proxy;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class MapObjectReference extends AbstractReference implements ProxiedEnti
     private final HashMap<Object, Key<?>> keyMap;
 
 
-    public MapObjectReference(final Datastore datastore, final Map mapToProxy, final Class referenceObjClass, final boolean ignoreMissing) {
+    public MapObjectReference(final DataStore datastore, final Map mapToProxy, final Class referenceObjClass, final boolean ignoreMissing) {
 
         super(datastore, referenceObjClass, ignoreMissing);
         object = mapToProxy;
@@ -62,7 +62,7 @@ public class MapObjectReference extends AbstractReference implements ProxiedEnti
 
     @SuppressWarnings("unchecked")
     private void syncKeys() {
-        final Datastore ds = getDatastore();
+        final DataStore ds = getDatastore();
 
         keyMap.clear();
         final Map<Object, Object> map = (Map) object;

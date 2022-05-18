@@ -183,7 +183,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
 
 
     @Override
-    public Datastore getDatastore() {
+    public JMongoDataStore getDataStore() {
         return ds;
     }
 
@@ -225,16 +225,24 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     @Override
-    public void decrement(K id, String fieldName) {
+    public void decrement(K id, String fieldName,boolean createIfMiss) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps,true);
+        this.update(q,uOps,createIfMiss);
+    }
+
+    public void decrement(K id, String fieldName) {
+        decrement(id,fieldName,false);
     }
 
     public void decrement(K id, String fieldName,Number val) {
+        decrement(id,fieldName,val,false);
+    }
+
+    public void decrement(K id, String fieldName,Number val,boolean createIfMiss) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName,val);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps,true);
+        this.update(q,uOps,createIfMiss);
     }
 
     @Override
@@ -272,9 +280,17 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
 
     @Override
     public void increment(K id, String fieldName, Number val) {
+        increment(id,fieldName,val,false);
+    }
+
+    public void increment(K id, String fieldName,boolean createIfMiss){
+        increment(id,fieldName,1,createIfMiss);
+    }
+
+    public void increment(K id, String fieldName, Number val,boolean createIfMiss) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps,true);
+        this.ds.update(q,uOps,createIfMiss);
     }
 
     @Override
@@ -304,7 +320,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     public UpdateResults setFieldValue(K id, String fieldName, Object value, boolean createIfMissing){
-        UpdateOperations<T> up = getDatastore().createUpdateOperations(entityClazz);
+        UpdateOperations<T> up = getDataStore().createUpdateOperations(entityClazz);
         up.disableValidation();
         up.set(fieldName,value);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
@@ -324,7 +340,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     public UpdateResults removeField(K id,String fieldName){
-        UpdateOperations<T> up = getDatastore().createUpdateOperations(entityClazz);
+        UpdateOperations<T> up = getDataStore().createUpdateOperations(entityClazz);
         up.disableValidation();
         up.unset(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
@@ -332,7 +348,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     public UpdateResults removeFieldValue(K id,String fieldName,Object value){
-        UpdateOperations<T> up = getDatastore().createUpdateOperations(entityClazz);
+        UpdateOperations<T> up = getDataStore().createUpdateOperations(entityClazz);
         up.disableValidation();
         up.removeAll(fieldName,value);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
@@ -345,7 +361,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
             list.add(v);
         }
 
-        UpdateOperations<T> up = getDatastore().createUpdateOperations(entityClazz);
+        UpdateOperations<T> up = getDataStore().createUpdateOperations(entityClazz);
         up.disableValidation();
         up.removeAll(fieldName,list);
 
@@ -359,7 +375,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
             list.add(v);
         }
 
-        UpdateOperations<T> up = getDatastore().createUpdateOperations(entityClazz);
+        UpdateOperations<T> up = getDataStore().createUpdateOperations(entityClazz);
         up.disableValidation();
         up.removeAll(fieldName,list);
 
@@ -368,7 +384,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     public UpdateResults removeFirstFieldValue(K id,String fieldName){
-        UpdateOperations<T> up = getDatastore().createUpdateOperations(entityClazz);
+        UpdateOperations<T> up = getDataStore().createUpdateOperations(entityClazz);
         up.disableValidation();
         up.removeFirst(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
@@ -376,7 +392,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     public UpdateResults removeLastFieldValue(K id,String fieldName){
-        UpdateOperations<T> up = getDatastore().createUpdateOperations(entityClazz);
+        UpdateOperations<T> up = getDataStore().createUpdateOperations(entityClazz);
         up.disableValidation();
         up.removeLast(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);

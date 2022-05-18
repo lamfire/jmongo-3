@@ -32,8 +32,8 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 
-public class DatastoreImpl implements AdvancedDatastore {
-    private static final Logger LOG = JmongoLoggerFactory.get(DatastoreImpl.class);
+public class DataStoreImpl implements AdvancedDataStore {
+    private static final Logger LOG = JmongoLoggerFactory.get(DataStoreImpl.class);
 
     private final Mapping mapping;
     private final MongoClient mongoClient;
@@ -46,15 +46,15 @@ public class DatastoreImpl implements AdvancedDatastore {
 
     private volatile QueryFactory queryFactory = new DefaultQueryFactory();
 
-    public DatastoreImpl(final Mapping mapping, final MongoClient mongoClient, final String dbName) {
+    public DataStoreImpl(final Mapping mapping, final MongoClient mongoClient, final String dbName) {
         this(mapping, mapping.getMapper(), mongoClient, dbName);
     }
 
-    public DatastoreImpl(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final String dbName) {
+    public DataStoreImpl(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final String dbName) {
         this(mapping, mapper, mongoClient, mongoClient.getDatabase(dbName));
     }
 
-    private DatastoreImpl(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final MongoDatabase database) {
+    private DataStoreImpl(final Mapping mapping, final Mapper mapper, final MongoClient mongoClient, final MongoDatabase database) {
         this.mapping = mapping;
         this.mapper = mapper;
         this.mongoClient = mongoClient;
@@ -64,8 +64,8 @@ public class DatastoreImpl implements AdvancedDatastore {
         this.indexHelper = new IndexHelper(mapper, database);
     }
 
-    public DatastoreImpl copy(final String database) {
-        return new DatastoreImpl(mapping, mapper, mongoClient, database);
+    public DataStoreImpl copy(final String database) {
+        return new DataStoreImpl(mapping, mapper, mongoClient, database);
     }
 
 

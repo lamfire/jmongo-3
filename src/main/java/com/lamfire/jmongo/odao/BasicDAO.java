@@ -21,7 +21,7 @@ class BasicDAO<T, K> implements DAO<T, K> {
     protected Class<T> entityClazz;
 
     @Deprecated
-    protected Datastore ds;
+    protected DataStore ds;
     //CHECKSTYLE:ON
 
 
@@ -164,7 +164,7 @@ class BasicDAO<T, K> implements DAO<T, K> {
 
 
     @Override
-    public Datastore getDatastore() {
+    public DataStore getDatastore() {
         return ds;
     }
 
@@ -195,7 +195,7 @@ class BasicDAO<T, K> implements DAO<T, K> {
 
 
     @Deprecated
-    public Datastore getDs() {
+    public DataStore getDs() {
         return ds;
     }
 

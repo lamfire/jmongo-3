@@ -1,6 +1,6 @@
 package com.lamfire.jmongo.mapping;
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.mapping.cache.EntityCache;
 import com.lamfire.jmongo.utils.IterHelper;
 import com.lamfire.jmongo.utils.IterHelper.MapIterCallback;
@@ -34,7 +34,7 @@ class EmbeddedMapper implements CustomMapper {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void fromDBObject(final Datastore datastore, final DBObject dbObject, final MappedField mf, final Object entity,
+    public void fromDBObject(final DataStore datastore, final DBObject dbObject, final MappedField mf, final Object entity,
                              final EntityCache cache, final Mapper mapper) {
         try {
             if (mf.isMap()) {
@@ -105,7 +105,7 @@ class EmbeddedMapper implements CustomMapper {
     }
 
     @SuppressWarnings("unchecked")
-    private void readCollection(final Datastore datastore, final Mapper mapper, final Object entity, final EntityCache cache,
+    private void readCollection(final DataStore datastore, final Mapper mapper, final Object entity, final EntityCache cache,
                                 final MappedField mf, final DBObject dbObject) {
         Collection values;
 
@@ -154,7 +154,7 @@ class EmbeddedMapper implements CustomMapper {
     }
 
     @SuppressWarnings("unchecked")
-    private void readMap(final Datastore datastore, final Mapper mapper, final Object entity, final EntityCache cache,
+    private void readMap(final DataStore datastore, final Mapper mapper, final Object entity, final EntityCache cache,
                          final MappedField mf, final DBObject dbObject) {
         final DBObject dbObj = (DBObject) mf.getDbObjectValue(dbObject);
 
@@ -195,7 +195,7 @@ class EmbeddedMapper implements CustomMapper {
         }
     }
 
-    private Object readMapOrCollectionOrEntity(final Datastore datastore, final Mapper mapper, final EntityCache cache,
+    private Object readMapOrCollectionOrEntity(final DataStore datastore, final Mapper mapper, final EntityCache cache,
                                                final MappedField mf, final EphemeralMappedField ephemeralMappedField,
                                                final DBObject dbObj) {
         if (ephemeralMappedField != null) {

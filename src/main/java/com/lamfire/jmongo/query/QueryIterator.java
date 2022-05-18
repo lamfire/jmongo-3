@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.query;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.mapping.Mapper;
 import com.lamfire.jmongo.mapping.cache.EntityCache;
 import com.mongodb.DBCursor;
@@ -19,10 +19,10 @@ public class QueryIterator<T, V> implements Iterable<V>, Iterator<V> {
     private final EntityCache cache;
     private long driverTime;
     private long mapperTime;
-    private Datastore datastore;
+    private DataStore datastore;
 
 
-    public QueryIterator(final Datastore datastore, final Iterator<DBObject> it, final Mapper mapper, final Class<T> clazz,
+    public QueryIterator(final DataStore datastore, final Iterator<DBObject> it, final Mapper mapper, final Class<T> clazz,
                          final String collection, final EntityCache cache) {
         wrapped = it;
         this.mapper = mapper;
@@ -120,7 +120,7 @@ public class QueryIterator<T, V> implements Iterable<V>, Iterator<V> {
         return item;
     }
 
-    Datastore getDatastore() {
+    DataStore getDatastore() {
         return datastore;
     }
 }

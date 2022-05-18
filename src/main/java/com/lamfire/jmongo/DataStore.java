@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 
-public interface Datastore {
+public interface DataStore {
 
     AggregationPipeline createAggregation(Class source);
 
@@ -39,8 +39,6 @@ public interface Datastore {
 
     <T> WriteResult delete(Query<T> query, DeleteOptions options);
 
-
-    @Deprecated
     <T> WriteResult delete(Query<T> query, WriteConcern wc);
 
 
@@ -49,8 +47,6 @@ public interface Datastore {
 
     <T> WriteResult delete(T entity, DeleteOptions options);
 
-
-    @Deprecated
     <T> WriteResult delete(T entity, WriteConcern wc);
 
 
@@ -59,12 +55,8 @@ public interface Datastore {
 
     void enableDocumentValidation();
 
-
-    @Deprecated
     <T> void ensureIndex(Class<T> clazz, String fields);
 
-
-    @Deprecated
     <T> void ensureIndex(Class<T> clazz, String name, String fields, boolean unique, boolean dropDupsOnCreate);
 
 
@@ -90,12 +82,8 @@ public interface Datastore {
 
     <T> Query<T> createQuery(final String collection, final Class<T> type);
 
-
-    @Deprecated
     <T, V> Query<T> find(Class<T> clazz, String property, V value);
 
-
-    @Deprecated
     <T, V> Query<T> find(Class<T> clazz, String property, V value, int offset, int size);
 
 
@@ -109,12 +97,8 @@ public interface Datastore {
 
     <T> T findAndModify(Query<T> query, UpdateOperations<T> operations);
 
-
-    @Deprecated
     <T> T findAndModify(Query<T> query, UpdateOperations<T> operations, boolean oldVersion);
 
-
-    @Deprecated
     <T> T findAndModify(Query<T> query, UpdateOperations<T> operations, boolean oldVersion, boolean createIfMissing);
 
 
@@ -176,13 +160,9 @@ public interface Datastore {
 
     <T> MapreduceResults<T> mapReduce(MapReduceOptions<T> options);
 
-
-    @Deprecated
     <T> MapreduceResults<T> mapReduce(MapreduceType type, Query q, String map, String reduce, String finalize,
                                       Map<String, Object> scopeFields, Class<T> outputType);
 
-
-    @Deprecated
     <T> MapreduceResults<T> mapReduce(MapreduceType type, Query q, Class<T> outputType, MapReduceCommand baseCommand);
 
 
@@ -197,22 +177,16 @@ public interface Datastore {
 
     <T> Iterable<Key<T>> save(Iterable<T> entities);
 
-
-    @Deprecated
     <T> Iterable<Key<T>> save(Iterable<T> entities, WriteConcern wc);
 
 
     <T> Iterable<Key<T>> save(Iterable<T> entities, InsertOptions options);
 
-
-    @Deprecated
     <T> Iterable<Key<T>> save(T... entities);
 
 
     <T> Key<T> save(T entity);
 
-
-    @Deprecated
     <T> Key<T> save(T entity, WriteConcern wc);
 
 
@@ -230,28 +204,16 @@ public interface Datastore {
 
     <T> UpdateResults update(Query<T> query, UpdateOperations<T> operations, UpdateOptions options);
 
-
-    @Deprecated
     <T> UpdateResults update(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing);
 
-
-    @Deprecated
     <T> UpdateResults update(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing, WriteConcern wc);
 
-
-    @Deprecated
     <T> UpdateResults updateFirst(Query<T> query, UpdateOperations<T> operations);
 
-
-    @Deprecated
     <T> UpdateResults updateFirst(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing);
 
-
-    @Deprecated
     <T> UpdateResults updateFirst(Query<T> query, UpdateOperations<T> operations, boolean createIfMissing, WriteConcern wc);
 
-
-    @Deprecated
     <T> UpdateResults updateFirst(Query<T> query, T entity, boolean createIfMissing);
 
     Mapper getMapper();

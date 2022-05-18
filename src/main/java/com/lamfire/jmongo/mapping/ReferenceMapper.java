@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.mapping;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.Reference;
 import com.lamfire.jmongo.logging.JmongoLoggerFactory;
@@ -31,7 +31,7 @@ class ReferenceMapper implements CustomMapper {
     public static final Logger LOG = JmongoLoggerFactory.get(ReferenceMapper.class);
 
     @Override
-    public void fromDBObject(final Datastore datastore, final DBObject dbObject, final MappedField mf, final Object entity,
+    public void fromDBObject(final DataStore datastore, final DBObject dbObject, final MappedField mf, final Object entity,
                              final EntityCache cache, final Mapper mapper) {
         final Class fieldType = mf.getType();
 
@@ -82,7 +82,7 @@ class ReferenceMapper implements CustomMapper {
                    : mapper.keyToDBRef(key));
     }
 
-    private Object createOrReuseProxy(final Datastore datastore, final Mapper mapper, final Class referenceObjClass, final Object ref,
+    private Object createOrReuseProxy(final DataStore datastore, final Mapper mapper, final Class referenceObjClass, final Object ref,
                                       final EntityCache cache, final Reference anntotation) {
         final Key key = anntotation.idOnly() ? mapper.manualRefToKey(referenceObjClass, ref) : mapper.refToKey((DBRef) ref);
         final Object proxyAlreadyCreated = cache.getProxy(key);
@@ -111,7 +111,7 @@ class ReferenceMapper implements CustomMapper {
         }
     }
 
-    private void readCollection(final Datastore datastore, final Mapper mapper, final DBObject dbObject, final MappedField mf,
+    private void readCollection(final DataStore datastore, final Mapper mapper, final DBObject dbObject, final MappedField mf,
                                 final Object entity,
                                 final Reference refAnn,
                                 final EntityCache cache) {
@@ -162,7 +162,7 @@ class ReferenceMapper implements CustomMapper {
         }
     }
 
-    private void readMap(final Datastore datastore, final Mapper mapper, final Object entity, final Reference refAnn,
+    private void readMap(final DataStore datastore, final Mapper mapper, final Object entity, final Reference refAnn,
                          final EntityCache cache, final MappedField mf, final DBObject dbObject) {
         final Class referenceObjClass = mf.getSubClass();
         Map m = mapper.getOptions().getObjectFactory().createMap(mf);
@@ -195,7 +195,7 @@ class ReferenceMapper implements CustomMapper {
         mf.setFieldValue(entity, m);
     }
 
-    private void readSingle(final Datastore datastore, final Mapper mapper, final Object entity, final Class fieldType,
+    private void readSingle(final DataStore datastore, final Mapper mapper, final Object entity, final Class fieldType,
                             final Reference annotation, final EntityCache cache, final MappedField mf, final DBObject dbObject) {
 
         final Object ref = mf.getDbObjectValue(dbObject);
@@ -294,7 +294,7 @@ class ReferenceMapper implements CustomMapper {
         }
     }
 
-    Object resolveObject(final Datastore datastore, final Mapper mapper, final EntityCache cache, final MappedField mf,
+    Object resolveObject(final DataStore datastore, final Mapper mapper, final EntityCache cache, final MappedField mf,
                          final boolean idOnly, final Object ref) {
         if (ref == null) {
             return null;

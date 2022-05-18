@@ -4,7 +4,7 @@
 package com.lamfire.jmongo.mapping;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.EntityInterceptor;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.*;
@@ -104,7 +104,7 @@ public class Mapper {
     }
 
 
-    public <T> T fromDBObject(final Datastore datastore, final Class<T> entityClass, final DBObject dbObject, final EntityCache cache) {
+    public <T> T fromDBObject(final DataStore datastore, final Class<T> entityClass, final DBObject dbObject, final EntityCache cache) {
         if (dbObject == null) {
             final Throwable t = new Throwable();
             LOG.error("A null reference was passed in for the dbObject", t);
@@ -130,7 +130,7 @@ public class Mapper {
     }
 
 
-    <T> T fromDBObject(final Datastore datastore, final DBObject dbObject) {
+    <T> T fromDBObject(final DataStore datastore, final DBObject dbObject) {
         if (dbObject.containsField(CLASS_NAME_FIELDNAME)) {
             T entity = opts.getObjectFactory().createInstance(null, dbObject);
             entity = fromDb(datastore, dbObject, entity, createEntityCache());
@@ -143,7 +143,7 @@ public class Mapper {
     }
 
 
-    public <T> T fromDb(final Datastore datastore, final DBObject dbObject, final T entity, final EntityCache cache) {
+    public <T> T fromDb(final DataStore datastore, final DBObject dbObject, final T entity, final EntityCache cache) {
         //hack to bypass things and just read the value.
         if (entity instanceof MappedField) {
             readMappedField(datastore, (MappedField) entity, entity, cache, dbObject);
@@ -493,7 +493,7 @@ public class Mapper {
     }
 
 
-    public void updateKeyAndVersionInfo(final Datastore datastore, final DBObject dbObj, final EntityCache cache, final Object entity) {
+    public void updateKeyAndVersionInfo(final DataStore datastore, final DBObject dbObj, final EntityCache cache, final Object entity) {
         final MappedClass mc = getMappedClass(entity);
 
         // update id field, if there.
@@ -614,7 +614,7 @@ public class Mapper {
             && (Key.class.isAssignableFrom(subClass) || DBRef.class.isAssignableFrom(subClass));
     }
 
-    private void readMappedField(final Datastore datastore, final MappedField mf, final Object entity, final EntityCache cache,
+    private void readMappedField(final DataStore datastore, final MappedField mf, final Object entity, final EntityCache cache,
                                  final DBObject dbObject) {
         if (mf.hasAnnotation(Property.class) || mf.hasAnnotation(Serialized.class)
             || mf.isTypeMongoCompatible() || getConverters().hasSimpleValueConverter(mf)) {

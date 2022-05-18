@@ -16,12 +16,12 @@ public class JMongoIndexesMgr {
         return instance;
     }
 
-    private String getKey(Mongo mongo, Datastore ds, String kind){
+    private String getKey(Mongo mongo, DataStore ds, String kind){
         String key = mongo.getAddress() +"/" + ds.getDB().getName()+ "/" + kind;
         return key;
     }
 
-    public boolean isEnsureIndexes(Mongo mongo, Datastore ds, String kind){
+    public boolean isEnsureIndexes(Mongo mongo, DataStore ds, String kind){
         String key = getKey(mongo,ds,kind);
         return indexes.containsKey(key);
     }

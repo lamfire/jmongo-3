@@ -32,7 +32,7 @@ public class MapreduceResults<T> implements Iterable<T> {
     private Mapper mapper;
     @Transient
     private EntityCache cache;
-    private Datastore datastore;
+    private DataStore datastore;
 
 
     public MapreduceResults(final MapReduceOutput output) {
@@ -114,7 +114,7 @@ public class MapreduceResults<T> implements Iterable<T> {
     }
 
 
-    public void setInlineRequiredOptions(final Datastore datastore, final Class<T> clazz, final Mapper mapper, final EntityCache cache) {
+    public void setInlineRequiredOptions(final DataStore datastore, final Class<T> clazz, final Mapper mapper, final EntityCache cache) {
         this.mapper = mapper;
         this.datastore = datastore;
         this.clazz = clazz;

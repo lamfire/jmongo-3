@@ -1,6 +1,6 @@
 package com.lamfire.jmongo.dao;
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.query.Query;
 import com.lamfire.jmongo.query.QueryResults;
@@ -38,6 +38,16 @@ public interface DAO<T, K> {
 	UpdateResults  update(K k, String fieldName, Object value);
 	
 	UpdateResults  update(K k, Map<String, Object> fieldAndValMap);
+
+	UpdateResults update(final K k, final UpdateOperations<T> ops,boolean createIfMissing);
+
+	UpdateResults update(final Query<T> query, final UpdateOperations<T> ops,boolean createIfMissing);
+
+	UpdateResults update(final Query<T> query, final UpdateOperations<T> ops,boolean createIfMissing,boolean multi);
+
+	UpdateResults update(K k, String fieldName, Object value,boolean createIfMissing);
+
+	UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing);
 
 	WriteResult delete(T entity);
 
@@ -81,7 +91,7 @@ public interface DAO<T, K> {
 
 	DBCollection getCollection();
 
-	Datastore getDatastore();
+	DataStore getDataStore();
 
     DBObject toDBObject(T entity);
 	
@@ -95,6 +105,10 @@ public interface DAO<T, K> {
 
 	void increment(K id, String fieldName, Number val);
 
+	void increment(K id, String fieldName,boolean createIfMiss);
+
+	void increment(K id, String fieldName, Number val,boolean createIfMiss);
+
 	T incrementAndGet(K id, String fieldName, Number val);
 
 	T incrementAndGet(K id, String fieldName, String... includeFields);
@@ -104,6 +118,10 @@ public interface DAO<T, K> {
 	void decrement(K id, String fieldName);
 
 	void decrement(K id, String fieldName, Number val);
+
+	void decrement(K id, String fieldName,boolean createIfMiss);
+
+	void decrement(K id, String fieldName, Number val,boolean createIfMiss);
 
 	T decrementAndGet(K id, String fieldName, Number val);
 

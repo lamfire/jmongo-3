@@ -1,6 +1,6 @@
 package com.lamfire.jmongo.query;
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.mapping.Mapper;
 import com.mongodb.DBCursor;
@@ -9,7 +9,7 @@ import com.mongodb.DBObject;
 
 public class QueryKeyIterator<T> extends QueryIterator<T, Key<T>> {
 
-    public QueryKeyIterator(final Datastore datastore, final DBCursor cursor, final Mapper mapper,
+    public QueryKeyIterator(final DataStore datastore, final DBCursor cursor, final Mapper mapper,
                             final Class<T> clazz, final String collection) {
         super(datastore, cursor, mapper, clazz, collection, null);
     }

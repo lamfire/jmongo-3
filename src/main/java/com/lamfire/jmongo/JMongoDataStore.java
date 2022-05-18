@@ -32,7 +32,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 
-public class JMongoDataStore implements AdvancedDatastore {
+public class JMongoDataStore implements AdvancedDataStore {
     private static final Logger LOG = JmongoLoggerFactory.get(JMongoDataStore.class);
 
     private final Mapping mapping;
@@ -276,7 +276,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T, V> Query<T> find(final Class<T> clazz, final String property, final V value) {
         final Query<T> query = createQuery(clazz);
         return query.filter(property, value);
@@ -288,7 +287,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T, V> Query<T> find(final Class<T> clazz, final String property, final V value, final int offset, final int size) {
         final Query<T> query = createQuery(clazz);
         query.offset(offset);
@@ -355,7 +353,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> T findAndModify(final Query<T> query, final UpdateOperations<T> operations, final boolean oldVersion) {
         return findAndModify(query, operations, new FindAndModifyOptions()
             .returnNew(!oldVersion)
@@ -363,7 +360,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> T findAndModify(final Query<T> query, final UpdateOperations<T> operations, final boolean oldVersion,
                                final boolean createIfMissing) {
         return findAndModify(query, operations, new FindAndModifyOptions()
@@ -563,7 +559,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> MapreduceResults<T> mapReduce(final MapreduceType type, final Query query, final String map, final String reduce,
                                              final String finalize, final Map<String, Object> scopeFields, final Class<T> outputType) {
 
@@ -592,7 +587,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> MapreduceResults<T> mapReduce(final MapreduceType type, final Query query, final Class<T> outputType,
                                              final MapReduceCommand baseCommand) {
 
@@ -714,7 +708,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> Iterable<Key<T>> save(final T... entities) {
         return save(asList(entities), new InsertOptions());
     }
@@ -725,7 +718,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> Key<T> save(final T entity, final WriteConcern wc) {
         return save(entity, new InsertOptions()
             .writeConcern(wc));
@@ -794,7 +786,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> UpdateResults update(final Query<T> query, final UpdateOperations<T> operations, final boolean createIfMissing,
                                     final WriteConcern wc) {
         return update(query, operations, new UpdateOptions()
@@ -804,13 +795,11 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> operations) {
         return update(query, operations, new UpdateOptions());
     }
 
     @Override
-    @Deprecated
     public <T> UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> operations, final boolean createIfMissing) {
         return update(query, operations, new UpdateOptions()
             .upsert(createIfMissing));
@@ -818,7 +807,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> operations, final boolean createIfMissing,
                                          final WriteConcern wc) {
         return update(query, operations, new UpdateOptions()
@@ -827,7 +815,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> UpdateResults updateFirst(final Query<T> query, final T entity, final boolean createIfMissing) {
         if (getMapper().getMappedClass(entity).getMappedVersionField() != null) {
             throw new UnsupportedOperationException("updateFirst() is not supported with versioned entities");
@@ -890,13 +877,11 @@ public class JMongoDataStore implements AdvancedDatastore {
 
 
     @Override
-    @Deprecated
     public <T> void ensureIndex(final Class<T> type, final String fields) {
         ensureIndex(type, null, fields, false, false);
     }
 
     @Override
-    @Deprecated
     public <T> void ensureIndex(final Class<T> clazz, final String name, final String fields, final boolean unique,
                                 final boolean dropDupsOnCreate) {
         MappedClass mappedClass = getMapper().getMappedClass(clazz);
@@ -926,13 +911,11 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> void ensureIndex(final String collection, final Class<T> type, final String fields) {
         ensureIndex(collection, type, null, fields, false, false);
     }
 
     @Override
-    @Deprecated
     public <T> void ensureIndex(final String collection, final Class<T> clazz, final String name, final String fields, final boolean unique,
                                 final boolean dropDupsOnCreate) {
         if (dropDupsOnCreate) {
@@ -1035,7 +1018,6 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> Iterable<Key<T>> insert(final T... entities) {
         return insert(asList(entities));
     }
@@ -1059,14 +1041,12 @@ public class JMongoDataStore implements AdvancedDatastore {
     }
 
     @Override
-    @Deprecated
     public <T> Iterable<Key<T>> insert(final String collection, final Iterable<T> entities, final WriteConcern wc) {
         return insert(getDB().getCollection(collection), entities, new InsertOptions()
             .writeConcern(wc));
     }
 
     @Override
-    @Deprecated
     public <T> Iterable<Key<T>> insert(final String collection, final Iterable<T> entities, final InsertOptions options) {
         return insert(getDB().getCollection(collection), entities, options);
     }
@@ -1092,8 +1072,6 @@ public class JMongoDataStore implements AdvancedDatastore {
         return save(getCollection(collection), ProxyHelper.unwrap(entity), options);
     }
 
-
-    @Deprecated
     public <T, V> WriteResult delete(final Class<T> clazz, final V id, final WriteConcern wc) {
         return delete(createQuery(clazz).filter(Mapper.ID_KEY, id), new DeleteOptions().writeConcern(wc));
     }

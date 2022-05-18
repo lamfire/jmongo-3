@@ -1,6 +1,6 @@
 package com.lamfire.jmongo.query;
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.Entity;
 import com.lamfire.jmongo.logging.JmongoLoggerFactory;
@@ -28,7 +28,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class QueryImpl<T> extends CriteriaContainerImpl implements Query<T> {
     private static final Logger LOG = JmongoLoggerFactory.get(QueryImpl.class);
-    private final Datastore ds;
+    private final DataStore ds;
     private final DBCollection dbColl;
     private final Class<T> clazz;
     private EntityCache cache;
@@ -46,7 +46,7 @@ public class QueryImpl<T> extends CriteriaContainerImpl implements Query<T> {
     }
 
 
-    public QueryImpl(final Class<T> clazz, final DBCollection coll, final Datastore ds) {
+    public QueryImpl(final Class<T> clazz, final DBCollection coll, final DataStore ds) {
         super(CriteriaJoin.AND);
 
         setQuery(this);
@@ -675,7 +675,7 @@ public class QueryImpl<T> extends CriteriaContainerImpl implements Query<T> {
 
 
     @Deprecated
-    public Datastore getDatastore() {
+    public DataStore getDatastore() {
         return ds;
     }
 

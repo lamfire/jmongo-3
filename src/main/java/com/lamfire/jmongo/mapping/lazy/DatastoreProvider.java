@@ -3,7 +3,7 @@
 package com.lamfire.jmongo.mapping.lazy;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 
 import java.io.Serializable;
 
@@ -12,8 +12,8 @@ import java.io.Serializable;
 @Deprecated
 public interface DatastoreProvider extends Serializable {
 
-    Datastore get();
+    DataStore get();
 
 
-    void register(Datastore ds);
+    void register(DataStore ds);
 }

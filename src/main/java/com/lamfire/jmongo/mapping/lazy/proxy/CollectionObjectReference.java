@@ -1,6 +1,6 @@
 package com.lamfire.jmongo.mapping.lazy.proxy;
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class CollectionObjectReference<T> extends AbstractReference implements P
 
 
     public CollectionObjectReference(final Collection<T> type, final Class<T> referenceObjClass, final boolean ignoreMissing,
-                                     final Datastore datastore) {
+                                     final DataStore datastore) {
 
         super(datastore, referenceObjClass, ignoreMissing);
 
@@ -78,7 +78,7 @@ public class CollectionObjectReference<T> extends AbstractReference implements P
 
         if (!ignoreMissing && (numberOfEntitiesExpected != retrievedEntities.size())) {
             throw new LazyReferenceFetchingException(format("During the lifetime of a proxy of type '%s', some referenced Entities"
-                                                                + " of type '%s' have disappeared from the Datastore.",
+                                                                + " of type '%s' have disappeared from the DataStore.",
                                                             c.getClass().getSimpleName(), referenceObjClass.getSimpleName()));
         }
 
@@ -87,7 +87,7 @@ public class CollectionObjectReference<T> extends AbstractReference implements P
     }
 
     private void syncKeys() {
-        final Datastore ds = getDatastore();
+        final DataStore ds = getDatastore();
 
         listOfKeys.clear();
         for (final Object e : ((Collection) object)) {

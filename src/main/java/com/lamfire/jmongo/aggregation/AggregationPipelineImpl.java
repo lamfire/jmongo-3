@@ -1,6 +1,6 @@
 package com.lamfire.jmongo.aggregation;
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.geo.GeometryShapeConverter;
 import com.lamfire.jmongo.logging.JmongoLoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
@@ -23,11 +23,11 @@ public class AggregationPipelineImpl implements AggregationPipeline {
     private final Class source;
     private final List<DBObject> stages = new ArrayList<DBObject>();
     private final Mapper mapper;
-    private final Datastore datastore;
+    private final DataStore datastore;
     private boolean firstStage = false;
 
 
-    public AggregationPipelineImpl(final Datastore datastore, final DBCollection collection, final Class source) {
+    public AggregationPipelineImpl(final DataStore datastore, final DBCollection collection, final Class source) {
         this.datastore = datastore;
         this.collection = collection;
         mapper = datastore.getMapper();

@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.query;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.ReadPreference;
@@ -113,7 +113,7 @@ public interface Query<T> extends QueryResults<T>, Cloneable {
 
     Query<T> excludeFields(String... fields);
 
-    Datastore getDatastore();
+    DataStore getDatastore();
 
     boolean isValidatingNames();
 

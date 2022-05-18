@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.mapping.lazy.proxy;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.thoughtworks.proxy.kit.ObjectReference;
 
@@ -16,14 +16,14 @@ public abstract class AbstractReference implements Serializable, ObjectReference
 
     private static final long serialVersionUID = 1L;
     //CHECKSTYLE:OFF
-    private final Datastore datastore;
+    private final DataStore datastore;
     protected final boolean ignoreMissing;
     protected final Class referenceObjClass;
     protected Object object;
     //CHECKSTYLE:ON
     private boolean isFetched;
 
-    protected AbstractReference(final Datastore datastore, final Class referenceObjClass, final boolean ignoreMissing) {
+    protected AbstractReference(final DataStore datastore, final Class referenceObjClass, final boolean ignoreMissing) {
         this.datastore = datastore;
         this.referenceObjClass = referenceObjClass;
         this.ignoreMissing = ignoreMissing;
@@ -86,7 +86,7 @@ public abstract class AbstractReference implements Serializable, ObjectReference
     }
 
 
-    public Datastore getDatastore() {
+    public DataStore getDatastore() {
         return datastore;
     }
 }

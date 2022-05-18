@@ -5,7 +5,7 @@ import com.lamfire.jmongo.query.Query;
 import com.lamfire.jmongo.query.UpdateOperations;
 import com.mongodb.*;
 
-public interface AdvancedDatastore extends Datastore {
+public interface AdvancedDataStore extends DataStore {
 
 
     DBDecoderFactory getDecoderFact();

@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.odao;
 
 
-import com.lamfire.jmongo.Datastore;
+import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.query.Query;
 import com.lamfire.jmongo.query.QueryResults;
@@ -89,7 +89,7 @@ interface DAO<T, K> {
     DBCollection getCollection();
 
 
-    Datastore getDatastore();
+    DataStore getDatastore();
 
 
     Class<T> getEntityClass();

@@ -47,23 +47,23 @@ public class Mapping {
 
 
     @SuppressWarnings("deprecation")
-    public Datastore createDatastore(final MongoClient mongoClient, final String dbName) {
-        return new DatastoreImpl(this, mongoClient, dbName);
+    public DataStore createDatastore(final MongoClient mongoClient, final String dbName) {
+        return new DataStoreImpl(this, mongoClient, dbName);
     }
 
 
     @SuppressWarnings("deprecation")
-    public Datastore createDatastore(final MongoClient mongoClient, final Mapper mapper, final String dbName) {
-        return new DatastoreImpl(this, mapper, mongoClient, dbName);
+    public DataStore createDatastore(final MongoClient mongoClient, final Mapper mapper, final String dbName) {
+        return new DataStoreImpl(this, mapper, mongoClient, dbName);
     }
 
 
-    public <T> T fromDBObject(final Datastore datastore, final Class<T> entityClass, final DBObject dbObject) {
+    public <T> T fromDBObject(final DataStore datastore, final Class<T> entityClass, final DBObject dbObject) {
         return fromDBObject(datastore, entityClass, dbObject, mapper.createEntityCache());
     }
 
 
-    public <T> T fromDBObject(final Datastore datastore, final Class<T> entityClass, final DBObject dbObject, final EntityCache cache) {
+    public <T> T fromDBObject(final DataStore datastore, final Class<T> entityClass, final DBObject dbObject, final EntityCache cache) {
         if (!entityClass.isInterface() && !mapper.isMapped(entityClass)) {
             throw new MappingException("Trying to map to an unmapped class: " + entityClass.getName());
         }
