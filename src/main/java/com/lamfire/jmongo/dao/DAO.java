@@ -29,15 +29,17 @@ public interface DAO<T, K> {
 
 	Key<T> save(T entity, WriteConcern wc);
 
+	UpdateResults  update(K k, Map<String, Object> fieldAndValMap);
+
 	UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation);
+
+	UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing);
 
 	UpdateResults update(Query<T> q, UpdateOperations<T> ops);
 
 	UpdateResults update(K k, UpdateOperations<T> ops);
 	
 	UpdateResults  update(K k, String fieldName, Object value);
-	
-	UpdateResults  update(K k, Map<String, Object> fieldAndValMap);
 
 	UpdateResults update(final K k, final UpdateOperations<T> ops,boolean createIfMissing);
 
@@ -47,7 +49,11 @@ public interface DAO<T, K> {
 
 	UpdateResults update(K k, String fieldName, Object value,boolean createIfMissing);
 
-	UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing);
+	T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean createIfMissing);
+
+	T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing);
+
+	T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean oldVersion ,boolean createIfMissing);
 
 	WriteResult delete(T entity);
 
@@ -99,15 +105,25 @@ public interface DAO<T, K> {
 
 	T incrementAndGet(K id, String fieldName);
 
+	T incrementAndGet(K id, String fieldName, Number val,boolean fieldValidation,boolean createIfMiss);
+
+	T incrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean createIfMiss);
+
+	T incrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss);
+
 	T decrementAndGet(K id, String fieldName);
 
-	void increment(K id, String fieldName);
+	UpdateResults increment(K id, String fieldName);
 
-	void increment(K id, String fieldName, Number val);
+	UpdateResults increment(K id, String fieldName, Number val);
 
-	void increment(K id, String fieldName,boolean createIfMiss);
+	UpdateResults increment(K id, String fieldName,boolean createIfMiss);
 
-	void increment(K id, String fieldName, Number val,boolean createIfMiss);
+	UpdateResults increment(K id, String fieldName, Number val,boolean fieldValidation,boolean createIfMiss);
+
+	UpdateResults increment(K id, String fieldName, Number val,boolean createIfMiss);
+
+	UpdateResults increment(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean createIfMiss);
 
 	T incrementAndGet(K id, String fieldName, Number val);
 
@@ -115,13 +131,15 @@ public interface DAO<T, K> {
 
 	T incrementAndGet(K id, String fieldName, Number val,String... includeFields);
 
-	void decrement(K id, String fieldName);
+	UpdateResults decrement(K id, String fieldName);
 
-	void decrement(K id, String fieldName, Number val);
+	UpdateResults decrement(K id, String fieldName, Number val);
 
-	void decrement(K id, String fieldName,boolean createIfMiss);
+	UpdateResults decrement(K id, String fieldName,boolean createIfMiss);
 
-	void decrement(K id, String fieldName, Number val,boolean createIfMiss);
+	UpdateResults decrement(K id, String fieldName, Number val,boolean createIfMiss);
+
+	UpdateResults decrement(K id, String fieldName,Number val,boolean fieldValidation,boolean createIfMiss);
 
 	T decrementAndGet(K id, String fieldName, Number val);
 

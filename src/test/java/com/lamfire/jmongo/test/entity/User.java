@@ -17,6 +17,10 @@ public class User {
     @Indexed
     private int age;
 
+    private long coins;
+
+    private int count;
+
     public String getId() {
         return id;
     }
@@ -39,5 +43,21 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public long getCoins() {
+        return coins;
+    }
+
+    public void setCoins(long coins) {
+        this.coins = coins;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

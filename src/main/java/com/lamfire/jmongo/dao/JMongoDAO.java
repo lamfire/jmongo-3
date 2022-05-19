@@ -218,31 +218,42 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     @Override
-    public void increment(K id, String fieldName) {
+    public UpdateResults increment(K id, String fieldName) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps,true);
+        return this.ds.update(q,uOps,true);
     }
 
     @Override
-    public void decrement(K id, String fieldName,boolean createIfMiss) {
+    public UpdateResults decrement(K id, String fieldName,boolean createIfMiss) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.update(q,uOps,createIfMiss);
+        return this.update(q,uOps,createIfMiss);
     }
 
-    public void decrement(K id, String fieldName) {
-        decrement(id,fieldName,false);
+    public UpdateResults decrement(K id, String fieldName) {
+        return decrement(id,fieldName,false);
     }
 
-    public void decrement(K id, String fieldName,Number val) {
-        decrement(id,fieldName,val,false);
+    public UpdateResults decrement(K id, String fieldName,Number val) {
+        return decrement(id,fieldName,val,false);
     }
 
-    public void decrement(K id, String fieldName,Number val,boolean createIfMiss) {
+    public UpdateResults decrement(K id, String fieldName,Number val,boolean createIfMiss) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName,val);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.update(q,uOps,createIfMiss);
+        return this.update(q,uOps,createIfMiss);
+    }
+
+    public UpdateResults decrement(K id, String fieldName,Number val,boolean fieldValidation,boolean createIfMiss) {
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).dec(fieldName,val);
+        if(fieldValidation){
+            uOps.enableValidation();
+        }else{
+            uOps.disableValidation();
+        }
+        Query<T> q = createQuery().field("_id").equal(id);
+        return this.update(q,uOps,createIfMiss);
     }
 
     @Override
@@ -250,6 +261,35 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
         return this.ds.findAndModify(q, uOps);
+    }
+
+    public T incrementAndGet(K id, String fieldName, Number val,boolean fieldValidation,boolean createIfMiss) {
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
+        if(fieldValidation){
+            uOps.enableValidation();
+        }else{
+            uOps.disableValidation();
+        }
+        Query<T> q = ds.find(colName,entityClazz ,"_id",id);
+        return this.ds.findAndModify(q, uOps,false,createIfMiss);
+    }
+
+    public T incrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean createIfMiss){
+        return incrementAndGet(id,fieldsAndValues,fieldValidation,false,createIfMiss);
+    }
+
+    public T incrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss){
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz);
+        if(fieldValidation){
+            uOps.enableValidation();
+        }else{
+            uOps.disableValidation();
+        }
+        for(Map.Entry<String,Number> e : fieldsAndValues.entrySet()){
+            uOps.inc(e.getKey(),e.getValue());
+        }
+        Query<T> q = ds.find(colName,entityClazz ,"_id",id);
+        return this.ds.findAndModify(q, uOps,oldVersion,createIfMiss);
     }
 
     @Override
@@ -279,18 +319,42 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     }
 
     @Override
-    public void increment(K id, String fieldName, Number val) {
-        increment(id,fieldName,val,false);
+    public UpdateResults increment(K id, String fieldName, Number val) {
+        return increment(id,fieldName,val,false);
     }
 
-    public void increment(K id, String fieldName,boolean createIfMiss){
-        increment(id,fieldName,1,createIfMiss);
+    public UpdateResults increment(K id, String fieldName,boolean createIfMiss){
+        return increment(id,fieldName,1,createIfMiss);
     }
 
-    public void increment(K id, String fieldName, Number val,boolean createIfMiss) {
+    public UpdateResults increment(K id, String fieldName, Number val,boolean createIfMiss) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
         Query<T> q = ds.find(colName,entityClazz ,"_id",id);
-        this.ds.update(q,uOps,createIfMiss);
+        return this.ds.update(q,uOps,createIfMiss);
+    }
+
+    public UpdateResults increment(K id, String fieldName, Number val,boolean fieldValidation,boolean createIfMiss){
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
+        if(fieldValidation){
+            uOps.enableValidation();
+        }else{
+            uOps.disableValidation();
+        }
+        Query<T> q = ds.find(colName,entityClazz ,"_id",id);
+        return this.ds.update(q,uOps,createIfMiss);
+    }
+
+    public UpdateResults increment(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean createIfMiss){
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz);
+        for(Map.Entry<String,Number> e : fieldsAndValues.entrySet()){
+            uOps.inc(e.getKey(),e.getValue());
+        }
+        if(fieldValidation){
+            uOps.enableValidation();
+        }else{
+            uOps.disableValidation();
+        }
+        return update(id,uOps,createIfMiss);
     }
 
     @Override
@@ -511,18 +575,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
 
     @Override
     public UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation) {
-        Key<T> key = new Key<T>(entityClazz, colName, k);
-        UpdateOperations<T> ops = this.ds.createUpdateOperations(entityClazz);
-        if(fieldValidation){
-            ops.enableValidation();
-        }else{
-            ops.disableValidation();
-        }
-        for(Map.Entry<String,Object> e : fieldAndValMap.entrySet()){
-            ops.set(e.getKey(), e.getValue());
-        }
-        Query<T> q = ds.find(colName,entityClazz ,"_id",k);
-        return ds.update(q, ops,false);
+        return update(k, fieldAndValMap,fieldValidation,false);
     }
 
     @Override
@@ -560,7 +613,28 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         Query<T> q = ds.find(colName,entityClazz ,"_id",k);
         return ds.update(q, ops,createIfMissing);
     }
+    public T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean createIfMissing){
+        return updateAndGet(k,fieldAndValMap,true,false,createIfMissing);
+    }
 
+    public T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing){
+        return updateAndGet(k,fieldAndValMap,fieldValidation,false,createIfMissing);
+    }
+
+    public T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean oldVersion ,boolean createIfMissing){
+        Key<T> key = new Key<T>(entityClazz, colName, k);
+        UpdateOperations<T> ops = this.ds.createUpdateOperations(entityClazz);
+        if(fieldValidation){
+            ops.enableValidation();
+        }else{
+            ops.disableValidation();
+        }
+        for(Map.Entry<String,Object> e : fieldAndValMap.entrySet()){
+            ops.set(e.getKey(), e.getValue());
+        }
+        Query<T> q = ds.find(colName,entityClazz ,"_id",k);
+        return ds.findAndModify(q, ops,oldVersion,createIfMissing);
+    }
     public UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> ops,boolean createIfMissing) {
         return ds.update(query, ops, createIfMissing);
     }
