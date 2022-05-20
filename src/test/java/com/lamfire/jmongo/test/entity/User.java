@@ -21,6 +21,8 @@ public class User {
 
     private int count;
 
+    private int version;
+
     public String getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class User {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 }

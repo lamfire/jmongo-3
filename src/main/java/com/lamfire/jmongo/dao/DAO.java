@@ -123,6 +123,8 @@ public interface DAO<T, K> {
 
 	UpdateResults increment(K id, String fieldName,boolean createIfMiss);
 
+	UpdateResults increment(K id, String fieldName, Number val,String whereField,Object whereFieldVal);
+
 	UpdateResults increment(K id, String fieldName, Number val,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
 	UpdateResults increment(K id, String fieldName, Number val,boolean fieldValidation,boolean createIfMiss);
@@ -130,6 +132,8 @@ public interface DAO<T, K> {
 	UpdateResults increment(K id, String fieldName, Number val,boolean createIfMiss);
 
 	UpdateResults increment(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean createIfMiss);
+
+	UpdateResults increment(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal);
 
 	UpdateResults increment(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
@@ -147,9 +151,13 @@ public interface DAO<T, K> {
 
 	UpdateResults decrement(K id, String fieldName, Number val,boolean createIfMiss);
 
+	UpdateResults decrement(K id, String fieldName,Number val,String whereField,Object whereFieldVal);
+
 	UpdateResults decrement(K id, String fieldName,Number val,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
 	UpdateResults decrement(K id, String fieldName,Number val,boolean fieldValidation,boolean createIfMiss);
+
+	UpdateResults decrement(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal);
 
 	UpdateResults decrement(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 

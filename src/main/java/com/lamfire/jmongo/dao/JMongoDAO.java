@@ -275,6 +275,14 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return this.update(q,uOps,createIfMiss);
     }
 
+    public UpdateResults decrement(K id, String fieldName,Number val,String whereField,Object whereFieldVal){
+        return decrement(id,fieldName,val,whereField,whereFieldVal,true,false);
+    }
+
+    public UpdateResults decrement(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal){
+        return decrement(id,fieldsAndValues,whereField,whereFieldVal,true,false);
+    }
+
     @Override
     public T incrementAndGet(K id, String fieldName, Number val) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
@@ -374,6 +382,14 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
             uOps.disableValidation();
         }
         return update(id,uOps,createIfMiss);
+    }
+
+    public UpdateResults increment(K id, String fieldName, Number val,String whereField,Object whereFieldVal){
+        return increment(id,fieldName,val,whereField,whereFieldVal,true,false);
+    }
+
+    public UpdateResults increment(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal){
+        return increment(id,fieldsAndValues,whereField,whereFieldVal,true,false);
     }
 
     public UpdateResults increment(K id, String fieldName, Number val,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss){
