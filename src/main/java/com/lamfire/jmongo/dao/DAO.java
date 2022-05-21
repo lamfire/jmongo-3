@@ -69,11 +69,15 @@ public interface DAO<T, K> {
 
 	T incrementAndGet(K id, String fieldName);
 
+    T incrementAndGet(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal);
+
 	T incrementAndGet(K id, String fieldName, Number val,boolean fieldValidation,boolean createIfMiss);
 
 	T incrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean createIfMiss);
 
 	T incrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss);
+
+    T incrementAndGet(Query<T> q, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss);
 
 	T decrementAndGet(K id, String fieldName);
 
@@ -97,19 +101,21 @@ public interface DAO<T, K> {
 
 	UpdateResults increment(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
-	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields);
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields);
 
-	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal);
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal);
 
-	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean createIfMiss);
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean createIfMiss);
 
-	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss);
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean fieldValidation,boolean createIfMiss);
 
-	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
 	T incrementAndGet(K id, String fieldName, Number val);
 
 	T incrementAndGet(K id, String fieldName, String... includeFields);
+
+    T incrementAndGet(K id, String incField,Number incVal,String whereField,Object whereFieldVal);
 
 	T incrementAndGet(K id, String fieldName, Number val,String... includeFields);
 
@@ -131,21 +137,33 @@ public interface DAO<T, K> {
 
 	UpdateResults decrement(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
-	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields);
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields);
 
-	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal);
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal);
 
-	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean createIfMiss);
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean createIfMiss);
 
-	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss);
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean fieldValidation,boolean createIfMiss);
 
-	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
 	T decrementAndGet(K id, String fieldName, Number val);
+
+    T decrementAndGet(K id, String fieldName, Number val,String whereField,Object whereFieldVal);
 
 	T decrementAndGet(K id, String fieldName, String... includeFields) ;
 
 	T decrementAndGet(K id, String fieldName, Number val,String... includeFields);
+
+    T decrementAndGet(K id, Map<String,Number> fieldsAndValues);
+
+    T decrementAndGet(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean createIfMiss);
+
+    T decrementAndGet(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal);
+
+    T decrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss);
+
+    T decrementAndGet(Query<T> q, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss);
 
 	List<Object> distinct(String fieldName);
 

@@ -6,37 +6,29 @@ import com.lamfire.jmongo.test.entity.User;
 import com.lamfire.json.JSON;
 import com.lamfire.utils.Asserts;
 import com.lamfire.utils.Maps;
+import com.lamfire.utils.RandomUtils;
 
 import java.util.Map;
 
 public class MultIncrementTest {
-    public static void testMultiInc(){
+
+
+    public static void main(String[] args) {
+        final String uid = "U9999";
+        final int age = 10;
+        final int coins = 100;
+        final int count = 0;
+        final int version =1;
+
         UserDAO dao = new UserDAO();
         User user = new User();
-        user.setAge(10);
-        user.setCoins(10);
-        user.setCount(10);
+        user.setAge(age);
+        user.setCoins(coins);
+        user.setCount(count);
         user.setId("U9999");
+        user.setVersion(version);
         dao.save(user);
-
-
-        Map<String,Number> incMap = Maps.newHashMap();
-        incMap.put("age",1);
-        incMap.put("coins",100);
-        incMap.put("count",2);
-        user = dao.incrementAndGet(user.getId(),incMap,true,true,true);
-
         System.out.println(JSON.toJSONString(user));
-
-        Asserts.equalsAssert(user.getAge(),11);
-        Asserts.equalsAssert(user.getCount(),12);
-        Asserts.equalsAssert(user.getCoins(),110);
-    }
-    public static void main(String[] args) {
-        String uid = "U00009";
-        UserDAO dao = new UserDAO();
-        User user = dao.get(uid);
-
 
         Map<String,Number> incMap = Maps.newHashMap();
         incMap.put("age",1);
@@ -44,10 +36,48 @@ public class MultIncrementTest {
         incMap.put("count",2);
         incMap.put("version",1);
 
-        UpdateResults results = dao.increment(uid,"count",2,"version",user.getVersion());
+        //test incrementAndGet
+        user = dao.incrementAndGet(uid,incMap,"version",user.getVersion());
         System.out.println(JSON.toJSONString(user));
-        System.out.println(results.getUpdatedCount());
+        Asserts.equalsAssert(user.getAge(),age + 1);
+        Asserts.equalsAssert(user.getCoins(),coins + 100);
+        Asserts.equalsAssert(user.getCount(),count + 2);
+        Asserts.equalsAssert(user.getVersion(),version + 1);
+
+        //test decrementAndGet
+        user = dao.decrementAndGet(uid,incMap,"version",user.getVersion());
+        System.out.println(JSON.toJSONString(user));
+        Asserts.equalsAssert(user.getAge(),age);
+        Asserts.equalsAssert(user.getCoins(),coins);
+        Asserts.equalsAssert(user.getCount(),count);
+        Asserts.equalsAssert(user.getVersion(),version);
+
+        //test incrementAndUpdate
+        String nickname = RandomUtils.randomTextWithFixedLength(6);
+        Map<String,Object> updateMap = Maps.newHashMap();
+        updateMap.put("nickname", nickname);
+        UpdateResults results = dao.incrementAndUpdate(uid,incMap,updateMap,"version",user.getVersion());
+        System.out.println("Update : " + results.getUpdatedCount());
+        user = dao.get(uid);
+        System.out.println(JSON.toJSONString(user));
+        Asserts.equalsAssert(user.getAge(),age + 1);
+        Asserts.equalsAssert(user.getCoins(),coins + 100);
+        Asserts.equalsAssert(user.getCount(),count + 2);
+        Asserts.equalsAssert(user.getVersion(),version + 1);
+        Asserts.equalsAssert(user.getNickname(),nickname);
 
 
+       //test decrementAndUpdate
+        nickname = RandomUtils.randomTextWithFixedLength(6);
+        updateMap.put("nickname", nickname);
+        results = dao.decrementAndUpdate(uid,incMap,updateMap,"version",user.getVersion());
+        System.out.println("Update : " + results.getUpdatedCount());
+        user = dao.get(uid);
+        System.out.println(JSON.toJSONString(user));
+        Asserts.equalsAssert(user.getAge(),age );
+        Asserts.equalsAssert(user.getCoins(),coins);
+        Asserts.equalsAssert(user.getCount(),count);
+        Asserts.equalsAssert(user.getVersion(),version);
+        Asserts.equalsAssert(user.getNickname(),nickname);
     }
 }

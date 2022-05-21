@@ -293,13 +293,29 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return incrementAndGet(id,fieldsAndValues,fieldValidation,false,createIfMiss);
     }
 
+    public T incrementAndGet(K id, String incField,Number incVal,String whereField,Object whereFieldVal){
+        Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
+        Map<String,Number> incMap = new HashMap();
+        incMap.put(incField,incVal);
+        return incrementAndGet(q,incMap,true,false,false);
+    }
+
+    public T incrementAndGet(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal){
+        Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
+        return incrementAndGet(q,fieldsAndValues,true,false,false);
+    }
+
     public T incrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss){
+        Query<T> q = ds.find(colName,entityClazz ,"_id",id);
+        return incrementAndGet(q, fieldsAndValues,fieldValidation,oldVersion,createIfMiss);
+    }
+
+    public T incrementAndGet(Query<T> q, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss){
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz);
         if(!fieldValidation)uOps.disableValidation();
         for(Map.Entry<String,Number> e : fieldsAndValues.entrySet()){
             uOps.inc(e.getKey(),e.getValue());
         }
-        Query<T> q = ds.find(colName,entityClazz ,"_id",id);
         return this.ds.findAndModify(q, uOps,oldVersion,createIfMiss);
     }
 
@@ -309,32 +325,32 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         Query<T> q = ds.find(colName,entityClazz ,"_id",id).includeFieldsOnly(includeFields);
         return this.ds.findAndModify(q, uOps);
     }
-    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields){
+    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields){
         return incrementAndUpdate(id,incFields,updateFields,true,false);
     }
-    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal){
+    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal){
         Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
         return incrementAndUpdate(q,incFields,updateFields,true,false);
     }
-    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean createIfMiss){
+    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean createIfMiss){
         return incrementAndUpdate(id,incFields,updateFields,true,createIfMiss);
     }
-    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss){
+    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean fieldValidation,boolean createIfMiss){
         Query<T> q = createQuery().field("_id").equal(id);
         return incrementAndUpdate(q,incFields,updateFields,fieldValidation,createIfMiss);
     }
-    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss){
+    public UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss){
         Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
         return incrementAndUpdate(q,incFields,updateFields,fieldValidation,createIfMiss);
     }
-    public UpdateResults incrementAndUpdate(Query<T> query, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss){
+    public UpdateResults incrementAndUpdate(Query<T> query, Map<String,Number> incFields,Map<String,Object> updateFields,boolean fieldValidation,boolean createIfMiss){
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz);
         if(!fieldValidation)uOps.disableValidation();
         for(Map.Entry<String,Number> e : incFields.entrySet()){
             uOps.inc(e.getKey(),e.getValue());
         }
-        for(Map.Entry<String,Number> e : updateFields.entrySet()){
-            uOps.setOnInsert(e.getKey(),e.getValue());
+        for(Map.Entry<String,Object> e : updateFields.entrySet()){
+            uOps.set(e.getKey(),e.getValue());
         }
         return update(query,uOps,createIfMiss);
     }
@@ -358,32 +374,67 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return this.ds.findAndModify(q, uOps);
     }
 
-    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields){
+    public T decrementAndGet(K id, Map<String,Number> fieldsAndValues){
+        Query<T> q = createQuery().field("_id").equal(id);
+        return decrementAndGet(q,fieldsAndValues,true,false,false);
+    }
+
+    public T decrementAndGet(K id, String fieldName, Number val,String whereField,Object whereFieldVal){
+        Map<String,Number> map = new HashMap();
+        map.put(fieldName,val);
+        return decrementAndGet(id,map,whereField,whereFieldVal);
+    }
+
+    public T decrementAndGet(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal){
+        Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
+        return decrementAndGet(q,fieldsAndValues,true,false,false);
+    }
+
+    public T decrementAndGet(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean createIfMiss){
+        Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
+        return decrementAndGet(q,fieldsAndValues,true,false,createIfMiss);
+    }
+
+    public T decrementAndGet(K id, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss){
+        Query<T> q = createQuery().field("_id").equal(id);
+        return decrementAndGet(q,fieldsAndValues,fieldValidation,oldVersion,createIfMiss);
+    }
+
+    public T decrementAndGet(Query<T> q, Map<String,Number> fieldsAndValues,boolean fieldValidation,boolean oldVersion,boolean createIfMiss){
+        UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz);
+        if(!fieldValidation)uOps.disableValidation();
+        for(Map.Entry<String,Number> e : fieldsAndValues.entrySet()){
+            uOps.dec(e.getKey(),e.getValue());
+        }
+        return this.ds.findAndModify(q, uOps,oldVersion,createIfMiss);
+    }
+
+    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields){
         return decrementAndUpdate(id,incFields,updateFields,true,false);
     }
-    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal){
+    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal){
         Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
         return decrementAndUpdate(q,incFields,updateFields,true,false);
     }
-    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean createIfMiss){
+    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean createIfMiss){
         return decrementAndUpdate(id,incFields,updateFields,true,createIfMiss);
     }
-    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss){
+    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,boolean fieldValidation,boolean createIfMiss){
         Query<T> q = createQuery().field("_id").equal(id);
         return decrementAndUpdate(q,incFields,updateFields,fieldValidation,createIfMiss);
     }
-    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss){
+    public UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss){
         Query<T> q = createQuery().field("_id").equal(id).field(whereField).equal(whereFieldVal);
         return decrementAndUpdate(q,incFields,updateFields,fieldValidation,createIfMiss);
     }
-    public UpdateResults decrementAndUpdate(Query<T> query, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss){
+    public UpdateResults decrementAndUpdate(Query<T> query, Map<String,Number> incFields,Map<String,Object> updateFields,boolean fieldValidation,boolean createIfMiss){
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz);
         if(!fieldValidation)uOps.disableValidation();
         for(Map.Entry<String,Number> e : incFields.entrySet()){
             uOps.dec(e.getKey(),e.getValue());
         }
-        for(Map.Entry<String,Number> e : updateFields.entrySet()){
-            uOps.setOnInsert(e.getKey(),e.getValue());
+        for(Map.Entry<String,Object> e : updateFields.entrySet()){
+            uOps.set(e.getKey(),e.getValue());
         }
         return update(query,uOps,createIfMiss);
     }
