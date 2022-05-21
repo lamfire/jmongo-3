@@ -31,6 +31,8 @@ public interface DAO<T, K> {
 
 	UpdateResults  update(K k, Map<String, Object> fieldAndValMap);
 
+	UpdateResults update(K k, Map<String, Object> fieldAndValMap,String whereField,Object whereFieldVal);
+
 	UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation);
 
 	UpdateResults update(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing);
@@ -53,59 +55,17 @@ public interface DAO<T, K> {
 
 	UpdateResults update(Query<T> query, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing,boolean multi);
 
+	T updateAndGet(K k, Map<String, Object> fieldAndValMap);
+
 	T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean createIfMissing);
+
+	T updateAndGet(K k, Map<String, Object> fieldAndValMap,String whereField,Object whereFieldVal);
 
 	T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean createIfMissing);
 
 	T updateAndGet(K k, Map<String, Object> fieldAndValMap,boolean fieldValidation,boolean oldVersion ,boolean createIfMissing);
 
-	WriteResult delete(T entity);
-
-	WriteResult delete(T entity, WriteConcern wc);
-
-	WriteResult deleteById(K id);
-
-	WriteResult deleteByQuery(Query<T> q);
-
-	T get(K id);
-
-	T get(K id, String... includeFields);
-
-	List<K> findIds(String key, Object value);
-
-	List<K> findIds();
-
-	List<K> findIds(Query<T> q);
-
-	boolean exists(String key, Object value);
-
-	boolean exists(Query<T> q);
-
-	boolean exists(K id);
-
-	long count();
-
-	long count(String key, Object value);
-
-	long count(Query<T> q);
-
-	T findOne(String key, Object value);
-
-	T findOne(Query<T> q);
-
-	QueryResults<T> find();
-
-	QueryResults<T> find(Query<T> q);
-
-	void ensureIndexes();
-
-	DBCollection getCollection();
-
-	DataStore getDataStore();
-
-    DBObject toDBObject(T entity);
-	
-	List<T> gets(Iterable<K> ids);
+	T updateAndGet(Query<T> query, UpdateOperations<T> ops,boolean oldVersion ,boolean createIfMissing);
 
 	T incrementAndGet(K id, String fieldName);
 
@@ -137,6 +97,16 @@ public interface DAO<T, K> {
 
 	UpdateResults increment(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields);
+
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal);
+
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean createIfMiss);
+
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss);
+
+	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
+
 	T incrementAndGet(K id, String fieldName, Number val);
 
 	T incrementAndGet(K id, String fieldName, String... includeFields);
@@ -160,6 +130,16 @@ public interface DAO<T, K> {
 	UpdateResults decrement(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal);
 
 	UpdateResults decrement(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
+
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields);
+
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal);
+
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean createIfMiss);
+
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,boolean fieldValidation,boolean createIfMiss);
+
+	UpdateResults decrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Number> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
 	T decrementAndGet(K id, String fieldName, Number val);
 
@@ -214,6 +194,54 @@ public interface DAO<T, K> {
 	Key<T> findOneId(final Query<T> query);
 
 	UpdateResults updateFirst(final Query<T> query, final UpdateOperations<T> ops);
+
+	WriteResult delete(T entity);
+
+	WriteResult delete(T entity, WriteConcern wc);
+
+	WriteResult deleteById(K id);
+
+	WriteResult deleteByQuery(Query<T> q);
+
+	T get(K id);
+
+	T get(K id, String... includeFields);
+
+	List<K> findIds(String key, Object value);
+
+	List<K> findIds();
+
+	List<K> findIds(Query<T> q);
+
+	boolean exists(String key, Object value);
+
+	boolean exists(Query<T> q);
+
+	boolean exists(K id);
+
+	long count();
+
+	long count(String key, Object value);
+
+	long count(Query<T> q);
+
+	T findOne(String key, Object value);
+
+	T findOne(Query<T> q);
+
+	QueryResults<T> find();
+
+	QueryResults<T> find(Query<T> q);
+
+	void ensureIndexes();
+
+	DBCollection getCollection();
+
+	DataStore getDataStore();
+
+	DBObject toDBObject(T entity);
+
+	List<T> gets(Iterable<K> ids);
 
 	WriteResult clear();
 

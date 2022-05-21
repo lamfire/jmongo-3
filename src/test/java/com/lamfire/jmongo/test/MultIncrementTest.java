@@ -44,7 +44,7 @@ public class MultIncrementTest {
         incMap.put("count",2);
         incMap.put("version",1);
 
-        UpdateResults results = dao.increment(uid,incMap,"version",user.getVersion());
+        UpdateResults results = dao.increment(uid,"count",2,"version",user.getVersion());
         System.out.println(JSON.toJSONString(user));
         System.out.println(results.getUpdatedCount());
 
