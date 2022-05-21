@@ -67,6 +67,16 @@ public interface DAO<T, K> {
 
 	T updateAndGet(Query<T> query, UpdateOperations<T> ops,boolean oldVersion ,boolean createIfMissing);
 
+	T incrementAndGet(K id, String fieldName, Number val);
+
+	T incrementAndGet(K id, Map<String,Number> fieldsAndValues);
+
+	T incrementAndGet(K id, String fieldName, String... includeFields);
+
+	T incrementAndGet(K id, String incField,Number incVal,String whereField,Object whereFieldVal);
+
+	T incrementAndGet(K id, String fieldName, Number val,String... includeFields);
+
 	T incrementAndGet(K id, String fieldName);
 
     T incrementAndGet(K id, Map<String,Number> fieldsAndValues,String whereField,Object whereFieldVal);
@@ -111,13 +121,7 @@ public interface DAO<T, K> {
 
 	UpdateResults incrementAndUpdate(K id, Map<String,Number> incFields,Map<String,Object> updateFields,String whereField,Object whereFieldVal,boolean fieldValidation,boolean createIfMiss);
 
-	T incrementAndGet(K id, String fieldName, Number val);
 
-	T incrementAndGet(K id, String fieldName, String... includeFields);
-
-    T incrementAndGet(K id, String incField,Number incVal,String whereField,Object whereFieldVal);
-
-	T incrementAndGet(K id, String fieldName, Number val,String... includeFields);
 
 	UpdateResults decrement(K id, String fieldName);
 

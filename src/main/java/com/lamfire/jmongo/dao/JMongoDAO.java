@@ -282,6 +282,10 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return this.ds.findAndModify(q, uOps);
     }
 
+    public T incrementAndGet(K id, Map<String,Number> fieldsAndValues){
+        return incrementAndGet(id,fieldsAndValues,true,false,false);
+    }
+
     public T incrementAndGet(K id, String fieldName, Number val,boolean fieldValidation,boolean createIfMiss) {
         UpdateOperations<T> uOps = this.ds.createUpdateOperations(entityClazz).inc(fieldName,val);
         if(!fieldValidation)uOps.disableValidation();

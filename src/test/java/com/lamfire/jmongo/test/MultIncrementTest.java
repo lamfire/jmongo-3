@@ -37,7 +37,7 @@ public class MultIncrementTest {
         incMap.put("version",1);
 
         //test incrementAndGet
-        user = dao.incrementAndGet(uid,incMap,"version",user.getVersion());
+        user = dao.incrementAndGet(uid,incMap);
         System.out.println(JSON.toJSONString(user));
         Asserts.equalsAssert(user.getAge(),age + 1);
         Asserts.equalsAssert(user.getCoins(),coins + 100);
@@ -45,7 +45,7 @@ public class MultIncrementTest {
         Asserts.equalsAssert(user.getVersion(),version + 1);
 
         //test decrementAndGet
-        user = dao.decrementAndGet(uid,incMap,"version",user.getVersion());
+        user = dao.decrementAndGet(uid,incMap);
         System.out.println(JSON.toJSONString(user));
         Asserts.equalsAssert(user.getAge(),age);
         Asserts.equalsAssert(user.getCoins(),coins);
@@ -70,7 +70,7 @@ public class MultIncrementTest {
        //test decrementAndUpdate
         nickname = RandomUtils.randomTextWithFixedLength(6);
         updateMap.put("nickname", nickname);
-        results = dao.decrementAndUpdate(uid,incMap,updateMap,"version",user.getVersion());
+        results = dao.decrementAndUpdate(uid,incMap,updateMap);
         System.out.println("Update : " + results.getUpdatedCount());
         user = dao.get(uid);
         System.out.println(JSON.toJSONString(user));
