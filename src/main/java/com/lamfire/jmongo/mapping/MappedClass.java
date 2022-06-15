@@ -1,5 +1,3 @@
-
-
 package com.lamfire.jmongo.mapping;
 
 
@@ -22,7 +20,6 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 
 
-
 public class MappedClass {
     private static final Logger LOG = JmongoLoggerFactory.get(MappedClass.class);
 
@@ -30,10 +27,10 @@ public class MappedClass {
 
     @SuppressWarnings("unchecked")
     private static final List<Class<? extends Annotation>> LIFECYCLE_ANNOTATIONS = asList(PrePersist.class,
-                                                                                          PreSave.class,
-                                                                                          PreLoad.class,
-                                                                                          PostPersist.class,
-                                                                                          PostLoad.class);
+            PreSave.class,
+            PreLoad.class,
+            PostPersist.class,
+            PostLoad.class);
 
     static {
         INTERESTING_ANNOTATIONS.add(Embedded.class);
@@ -49,10 +46,10 @@ public class MappedClass {
 
 
     private final Map<Class<? extends Annotation>, List<Annotation>> foundAnnotations =
-        new HashMap<Class<? extends Annotation>, List<Annotation>>();
+            new HashMap<Class<? extends Annotation>, List<Annotation>>();
 
     private final Map<Class<? extends Annotation>, List<ClassMethodPair>> lifecycleMethods =
-        new HashMap<Class<? extends Annotation>, List<ClassMethodPair>>();
+            new HashMap<Class<? extends Annotation>, List<ClassMethodPair>>();
 
     private final List<MappedField> persistenceFields = new ArrayList<MappedField>();
 
@@ -83,23 +80,6 @@ public class MappedClass {
         }
     }
 
-
-    public MappedClass getSuperClass() {
-        return superClass;
-    }
-
-
-
-    public boolean isInterface() {
-        return clazz.isInterface();
-    }
-
-
-    public boolean isAbstract() {
-        return Modifier.isAbstract(clazz.getModifiers());
-    }
-
-
     public static boolean isSupportedType(final Class<?> clazz) {
         if (ReflectionUtils.isPropertyType(clazz)) {
             return true;
@@ -123,11 +103,21 @@ public class MappedClass {
         return false;
     }
 
-
     public static void addInterestingAnnotation(final Class<? extends Annotation> annotation) {
         INTERESTING_ANNOTATIONS.add(annotation);
     }
 
+    public MappedClass getSuperClass() {
+        return superClass;
+    }
+
+    public boolean isInterface() {
+        return clazz.isInterface();
+    }
+
+    public boolean isAbstract() {
+        return Modifier.isAbstract(clazz.getModifiers());
+    }
 
     public void addAnnotation(final Class<? extends Annotation> clazz, final Annotation ann) {
         if (ann == null || clazz == null) {
@@ -408,18 +398,18 @@ public class MappedClass {
                     persistenceFields.add(new MappedField(field, clazz, mapper));
                     update();
                 } else if (field.isAnnotationPresent(Property.class)
-                           || field.isAnnotationPresent(Reference.class)
-                           || field.isAnnotationPresent(Embedded.class)
-                           || field.isAnnotationPresent(Serialized.class)
-                           || isSupportedType(field.getType())
-                           || ReflectionUtils.implementsInterface(field.getType(), Serializable.class)) {
+                        || field.isAnnotationPresent(Reference.class)
+                        || field.isAnnotationPresent(Embedded.class)
+                        || field.isAnnotationPresent(Serialized.class)
+                        || isSupportedType(field.getType())
+                        || ReflectionUtils.implementsInterface(field.getType(), Serializable.class)) {
                     persistenceFields.add(new MappedField(field, clazz, mapper));
                 } else {
                     if (mapper.getOptions().getDefaultMapper() != null) {
                         persistenceFields.add(new MappedField(field, clazz, mapper));
                     } else if (LOG.isWarnEnabled()) {
                         LOG.warning(format("Ignoring (will not persist) field: %s.%s [type:%s]", clazz.getName(), field.getName(),
-                                           field.getType().getName()));
+                                field.getType().getName()));
                     }
                 }
             }
@@ -485,9 +475,9 @@ public class MappedClass {
 
     private boolean isIgnorable(final java.lang.reflect.Field field, final int fieldMods, final Mapper mapper) {
         return field.isAnnotationPresent(Transient.class)
-               || Modifier.isTransient(fieldMods)
-               || field.isSynthetic() && Modifier.isTransient(fieldMods)
-               || mapper.getOptions().isIgnoreFinals() && Modifier.isFinal(fieldMods);
+                || Modifier.isTransient(fieldMods)
+                || field.isSynthetic() && Modifier.isTransient(fieldMods)
+                || mapper.getOptions().isIgnoreFinals() && Modifier.isFinal(fieldMods);
     }
 
     private static class ClassMethodPair {

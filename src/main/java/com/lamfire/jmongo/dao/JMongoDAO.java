@@ -3,10 +3,13 @@ package com.lamfire.jmongo.dao;
 import com.lamfire.jmongo.*;
 import com.lamfire.jmongo.InsertOptions;
 import com.lamfire.jmongo.aggregation.AggregationPipeline;
+import com.lamfire.jmongo.annotations.Id;
 import com.lamfire.jmongo.mapping.Mapper;
 import com.lamfire.jmongo.query.*;
 import com.mongodb.*;
 
+import java.lang.reflect.Field;
+import java.security.InvalidParameterException;
 import java.util.*;
 
 
@@ -14,6 +17,7 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
     private String dbName;
     private String colName;
     protected Class<T> entityClazz;
+    protected String IdFieldName;
 
     private MongoClient mongoClient;
     private Mapping mapping;
@@ -645,8 +649,18 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return (Map<String,Object>) getCollection().findOne(id);
     }
 
+    public String getIdFieldName(){
+        return mapping.getMapper().getMappedClass(entityClazz).getIdField().getName();
+    }
+
     public Key<T> save(Map<String,Object> map){
+        String idField = getIdFieldName();
+        Object id = map.remove(idField);
+        if(id == null){
+            throw new InvalidParameterException("not id key["+idField+"] found,cannot save : " + map);
+        }
         DBObject obj = new BasicDBObject();
+        obj.put(Mapper.ID_KEY,id);
         obj.putAll(map);
         WriteResult result =  ds.save(getCollection(),obj);
         return new Key<T>(entityClazz, colName,result.getUpsertedId());

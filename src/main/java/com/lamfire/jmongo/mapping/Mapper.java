@@ -352,6 +352,9 @@ public class Mapper {
         return mappedClasses.containsKey(c.getName());
     }
 
+    public MappedClass getMappedClass(final Class c){
+        return mappedClasses.get(c.getName());
+    }
 
     public DBRef keyToDBRef(final Key key) {
         if (key == null) {
