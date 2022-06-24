@@ -25,10 +25,14 @@ public class LoggerFactory {
 
     public static Logger getLogger(String name){
     	if(hasLog4j){
-            return new Log4jLogger(name);
+    	    try {
+                return new Log4jLogger(name);
+            }catch (Exception e){}
         }
         if(hasSlf4j){
-            return new Slf4jLogger(name);
+            try {
+                return new Slf4jLogger(name);
+            }catch (Exception e){}
         }
         return new JdkLogger(name);
     }
