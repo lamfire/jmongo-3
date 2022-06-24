@@ -287,7 +287,7 @@ public class DataStoreImpl implements AdvancedDataStore {
         }
 
         if (LOG.isTraceEnabled()) {
-            LOG.info("Executing findAndModify(" + dbColl.getName() + ") with update ");
+            LOG.debug("Executing findAndModify(" + dbColl.getName() + ") with update ");
         }
 
         updateForVersioning(query, operations);
@@ -575,7 +575,7 @@ public class DataStoreImpl implements AdvancedDataStore {
         }
 
         if (LOG.isTraceEnabled()) {
-            LOG.info("Executing " + cmd.toString());
+            LOG.debug("Executing " + cmd.toString());
         }
 
         final EntityCache cache = createCache();

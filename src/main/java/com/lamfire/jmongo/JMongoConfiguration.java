@@ -51,7 +51,7 @@ public class JMongoConfiguration {
 		for(Entry<Object,Object> e : properties.entrySet()){
 			String key = e.getKey().toString();
 			String val = e.getValue().toString();
-			LOGGER.info("[FOUND] : " + key +" = " + val );
+			LOGGER.debug("[FOUND] : " + key +" = " + val );
             String[] keys = key.split("\\.");
 			if(keys.length != 2){
 				continue;

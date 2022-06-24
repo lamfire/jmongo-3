@@ -31,7 +31,7 @@ public class JMongoIndexesMgr {
         if(indexes.containsKey(key)){
             return;
         }
-        LOGGER.info("[EnsureIndexes] : " + key +" -> " + entityClazz.getName());
+        LOGGER.debug("[EnsureIndexes] : " + key +" -> " + entityClazz.getName());
         ds.ensureIndexes(colName,entityClazz);
         indexes.put(key,entityClazz);
     }

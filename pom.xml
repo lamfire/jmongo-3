@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.6.1</version>
+            <version>1.7.25</version>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.lamfire</groupId>
             <artifactId>lamfire</artifactId>
-            <version>2.3.34</version>
+            <version>2.3.36</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -86,6 +86,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/*.properties</exclude>
+                        <exclude>**/*.xml</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -28,7 +28,7 @@ public class JMongo {
             return dao;
         }
 
-        LOGGER.info("[Create Cached DAO For] : " + key );
+        LOGGER.debug("[Create Cached DAO For] : " + key );
         dao =  new JMongoDAO(zone,dbName,colName,entityClass);
         daos.put(key,dao);
         return dao;
