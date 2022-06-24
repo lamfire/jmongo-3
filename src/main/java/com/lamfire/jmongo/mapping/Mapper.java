@@ -10,7 +10,7 @@ import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.*;
 import com.lamfire.jmongo.converters.CustomConverters;
 import com.lamfire.jmongo.converters.TypeConverter;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.cache.EntityCache;
 import com.lamfire.jmongo.mapping.lazy.LazyFeatureDependencies;
@@ -48,7 +48,7 @@ public class Mapper {
     public static final String IGNORED_FIELDNAME = ".";
 
     public static final String CLASS_NAME_FIELDNAME = "className";
-    private static final Logger LOG = JmongoLoggerFactory.get(Mapper.class);
+    private static final Logger LOG = LoggerFactory.get(Mapper.class);
 
     private final Map<String, MappedClass> mappedClasses = new ConcurrentHashMap<String, MappedClass>();
     private final ConcurrentHashMap<String, Set<MappedClass>> mappedClassesByCollection = new ConcurrentHashMap<String, Set<MappedClass>>();

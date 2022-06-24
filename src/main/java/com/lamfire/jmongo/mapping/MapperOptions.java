@@ -2,7 +2,7 @@ package com.lamfire.jmongo.mapping;
 
 
 import com.lamfire.jmongo.ObjectFactory;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.cache.DefaultEntityCacheFactory;
 import com.lamfire.jmongo.mapping.cache.EntityCacheFactory;
@@ -10,7 +10,7 @@ import com.lamfire.jmongo.mapping.cache.EntityCacheFactory;
 
 @SuppressWarnings("deprecation")
 public class MapperOptions {
-    private static final Logger LOG = JmongoLoggerFactory.get(MapperOptions.class);
+    private static final Logger LOG = LoggerFactory.get(MapperOptions.class);
 
     @Deprecated
     private boolean actLikeSerializer;

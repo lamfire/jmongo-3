@@ -3,7 +3,7 @@ package com.lamfire.jmongo;
 
 import com.lamfire.jmongo.annotations.NotSaved;
 import com.lamfire.jmongo.annotations.Transient;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.Mapper;
 import com.lamfire.jmongo.mapping.MappingException;
@@ -19,7 +19,7 @@ import java.util.Iterator;
 @NotSaved
 @SuppressWarnings("deprecation")
 public class MapreduceResults<T> implements Iterable<T> {
-    private static final Logger LOG = JmongoLoggerFactory.get(MapreduceResults.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MapreduceResults.class);
     private final Stats counts = new Stats();
     private MapReduceOutput output;
     private String outputCollectionName;

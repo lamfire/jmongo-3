@@ -3,7 +3,7 @@ package com.lamfire.jmongo;
 import com.lamfire.jmongo.aggregation.AggregationPipeline;
 import com.lamfire.jmongo.aggregation.AggregationPipelineImpl;
 import com.lamfire.jmongo.annotations.*;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedClass;
 import com.lamfire.jmongo.mapping.MappedField;
@@ -33,7 +33,7 @@ import static java.util.Collections.singletonList;
 
 
 public class DataStoreImpl implements AdvancedDataStore {
-    private static final Logger LOG = JmongoLoggerFactory.get(DataStoreImpl.class);
+    private static final Logger LOG = LoggerFactory.get(DataStoreImpl.class);
 
     private final Mapping mapping;
     private final MongoClient mongoClient;

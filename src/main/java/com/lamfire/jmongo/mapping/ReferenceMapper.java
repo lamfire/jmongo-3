@@ -4,7 +4,7 @@ package com.lamfire.jmongo.mapping;
 import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.Reference;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.cache.EntityCache;
 import com.lamfire.jmongo.mapping.lazy.LazyFeatureDependencies;
@@ -28,7 +28,7 @@ import java.util.Map;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 class ReferenceMapper implements CustomMapper {
-    public static final Logger LOG = JmongoLoggerFactory.get(ReferenceMapper.class);
+    public static final Logger LOG = LoggerFactory.get(ReferenceMapper.class);
 
     @Override
     public void fromDBObject(final DataStore datastore, final DBObject dbObject, final MappedField mf, final Object entity,

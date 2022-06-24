@@ -1,6 +1,6 @@
 package com.lamfire.jmongo.converters;
 
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedField;
 import com.lamfire.jmongo.mapping.Mapper;
@@ -19,7 +19,7 @@ import static java.lang.String.format;
 
 
 public abstract class Converters {
-    private static final Logger LOG = JmongoLoggerFactory.get(Converters.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Converters.class);
 
     private final Mapper mapper;
     private final List<TypeConverter> untypedTypeEncoders = new LinkedList<TypeConverter>();

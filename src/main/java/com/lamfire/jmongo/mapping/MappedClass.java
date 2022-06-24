@@ -3,7 +3,7 @@ package com.lamfire.jmongo.mapping;
 
 import com.lamfire.jmongo.EntityInterceptor;
 import com.lamfire.jmongo.annotations.*;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.validation.MappingValidator;
 import com.lamfire.jmongo.utils.ReflectionUtils;
@@ -21,7 +21,7 @@ import static java.util.Arrays.asList;
 
 
 public class MappedClass {
-    private static final Logger LOG = JmongoLoggerFactory.get(MappedClass.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MappedClass.class);
 
     private static final List<Class<? extends Annotation>> INTERESTING_ANNOTATIONS = new ArrayList<Class<? extends Annotation>>();
 

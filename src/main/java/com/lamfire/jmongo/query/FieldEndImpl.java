@@ -2,7 +2,7 @@ package com.lamfire.jmongo.query;
 
 
 import com.lamfire.jmongo.geo.*;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.utils.Assert;
 
@@ -15,7 +15,7 @@ import static com.lamfire.jmongo.query.FilterOperator.INTERSECTS;
 
 
 public class FieldEndImpl<T extends CriteriaContainerImpl> implements FieldEnd<T> {
-    private static final Logger LOG = JmongoLoggerFactory.get(FieldEndImpl.class);
+    private static final Logger LOG = LoggerFactory.get(FieldEndImpl.class);
 
     private final Query<?> query;
     private final String field;

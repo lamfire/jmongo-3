@@ -2,7 +2,7 @@ package com.lamfire.jmongo.aggregation;
 
 import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.geo.GeometryShapeConverter;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedField;
 import com.lamfire.jmongo.mapping.Mapper;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class AggregationPipelineImpl implements AggregationPipeline {
-    private static final Logger LOG = JmongoLoggerFactory.get(AggregationPipelineImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AggregationPipelineImpl.class);
 
     private final DBCollection collection;
     private final Class source;

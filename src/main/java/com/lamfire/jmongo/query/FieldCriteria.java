@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.query;
 
 
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedClass;
 import com.lamfire.jmongo.mapping.MappedField;
@@ -18,7 +18,7 @@ import static com.lamfire.jmongo.query.QueryValidator.validateQuery;
 
 
 class FieldCriteria extends AbstractCriteria {
-    private static final Logger LOG = JmongoLoggerFactory.get(FieldCriteria.class);
+    private static final Logger LOG = LoggerFactory.get(FieldCriteria.class);
 
     private final String field;
     private final FilterOperator operator;

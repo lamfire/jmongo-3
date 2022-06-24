@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.converters;
 
 
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedField;
 
@@ -13,7 +13,7 @@ import java.util.Locale;
 
 
 public class DateConverter extends TypeConverter implements SimpleValueConverter {
-    private static final Logger LOG = JmongoLoggerFactory.get(DateConverter.class);
+    private static final Logger LOG = LoggerFactory.get(DateConverter.class);
 
 
 

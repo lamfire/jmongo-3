@@ -1,7 +1,7 @@
 package com.lamfire.jmongo.query;
 
 import com.lamfire.jmongo.annotations.Serialized;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedClass;
 import com.lamfire.jmongo.mapping.MappedField;
@@ -14,7 +14,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 final class QueryValidator {
-    private static final Logger LOG = JmongoLoggerFactory.get(QueryValidator.class);
+    private static final Logger LOG = LoggerFactory.get(QueryValidator.class);
 
     private QueryValidator() {
     }

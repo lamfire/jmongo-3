@@ -3,7 +3,7 @@ package com.lamfire.jmongo.query;
 import com.lamfire.jmongo.DataStore;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.Entity;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedClass;
 import com.lamfire.jmongo.mapping.MappedField;
@@ -27,7 +27,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 
 public class QueryImpl<T> extends CriteriaContainerImpl implements Query<T> {
-    private static final Logger LOG = JmongoLoggerFactory.get(QueryImpl.class);
+    private static final Logger LOG = LoggerFactory.get(QueryImpl.class);
     private final DataStore ds;
     private final DBCollection dbColl;
     private final Class<T> clazz;

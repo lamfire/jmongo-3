@@ -7,7 +7,7 @@ package com.lamfire.jmongo.utils;
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.Embedded;
 import com.lamfire.jmongo.annotations.Entity;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappingException;
 import com.mongodb.BasicDBObject;
@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 
 
 public final class ReflectionUtils {
-    private static final Logger LOG = JmongoLoggerFactory.get(ReflectionUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ReflectionUtils.class);
 
 
     private ReflectionUtils() {

@@ -3,7 +3,7 @@
 package com.lamfire.jmongo;
 
 import com.lamfire.jmongo.annotations.*;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedClass;
 import com.lamfire.jmongo.mapping.MappedField;
@@ -28,7 +28,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 
 final class IndexHelper {
-    private static final Logger LOG = JmongoLoggerFactory.get(IndexHelper.class);
+    private static final Logger LOG = LoggerFactory.get(IndexHelper.class);
     private static final EncoderContext ENCODER_CONTEXT = EncoderContext.builder().build();
 
     private final Mapper mapper;

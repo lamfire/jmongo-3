@@ -1,14 +1,14 @@
 package com.lamfire.jmongo.mapping.lazy;
 
 
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 
 
 
 public final class LazyFeatureDependencies {
 
-    private static final Logger LOG = JmongoLoggerFactory.get(LazyFeatureDependencies.class);
+    private static final Logger LOG = LoggerFactory.get(LazyFeatureDependencies.class);
     private static Boolean fulFilled;
 
     private LazyFeatureDependencies() {

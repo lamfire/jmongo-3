@@ -5,7 +5,7 @@ package com.lamfire.jmongo.mapping;
 
 import com.lamfire.jmongo.Key;
 import com.lamfire.jmongo.annotations.*;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.utils.ReflectionUtils;
 import com.mongodb.DBObject;
@@ -23,7 +23,7 @@ import static java.util.Arrays.asList;
 
 @SuppressWarnings("unchecked")
 public class MappedField {
-    private static final Logger LOG = JmongoLoggerFactory.get(MappedField.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MappedField.class);
     // The Annotations to look for when reflecting on the field (stored in the mappingAnnotations)
     private static final List<Class<? extends Annotation>> INTERESTING = new ArrayList<Class<? extends Annotation>>();
 

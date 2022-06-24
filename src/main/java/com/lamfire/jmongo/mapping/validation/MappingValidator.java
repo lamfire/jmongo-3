@@ -5,7 +5,7 @@ import com.lamfire.jmongo.annotations.Embedded;
 import com.lamfire.jmongo.annotations.Property;
 import com.lamfire.jmongo.annotations.Reference;
 import com.lamfire.jmongo.annotations.Serialized;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.mapping.MappedClass;
 import com.lamfire.jmongo.mapping.Mapper;
@@ -23,7 +23,7 @@ import static java.util.Collections.sort;
 
 public class MappingValidator {
 
-    private static final Logger LOG = JmongoLoggerFactory.get(MappingValidator.class);
+    private static final Logger LOG = LoggerFactory.get(MappingValidator.class);
     private ObjectFactory creator;
 
 

@@ -3,7 +3,7 @@ package com.lamfire.jmongo.mapping;
 
 import com.lamfire.jmongo.ObjectFactory;
 import com.lamfire.jmongo.annotations.ConstructorArgs;
-import com.lamfire.jmongo.logging.JmongoLoggerFactory;
+import com.lamfire.jmongo.logging.LoggerFactory;
 import com.lamfire.jmongo.logging.Logger;
 import com.mongodb.DBObject;
 
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class DefaultCreator implements ObjectFactory {
 
-    private static final Logger LOG = JmongoLoggerFactory.get(DefaultCreator.class);
+    private static final Logger LOG = LoggerFactory.get(DefaultCreator.class);
 
     private Map<String, Class> classNameCache = new ConcurrentHashMap<String, Class>();
 

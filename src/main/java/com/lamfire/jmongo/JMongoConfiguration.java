@@ -3,10 +3,8 @@ package com.lamfire.jmongo;
 
 import com.lamfire.jmongo.logging.Logger;
 import com.lamfire.jmongo.logging.LoggerFactory;
-import com.mongodb.MongoClientURI;
 
 import java.io.InputStream;
-import java.net.UnknownHostException;
 import java.util.*;
 import java.util.Map.Entry;
 
