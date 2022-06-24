@@ -2,20 +2,22 @@ package com.lamfire.jmongo.logging;
 
 public class LoggerFactory {
 	static final String Log4J_LOGGER = "org.apache.log4j.Logger";
-	static final String Slf4J_LOGGER = "org.slf4j.impl.StaticLoggerBinder";
+	static final String Slf4J_LOGGER = "org.slf4j.LoggerFactory";
 	private static boolean hasSlf4j = false;
 	private static boolean hasLog4j = false;
 	static{
 		try {
             Class.forName(Log4J_LOGGER);
             hasLog4j = true;
+            System.out.println("Logger:" + Log4J_LOGGER);
         } catch (Exception e) {
+
         }
-        
         if(!hasLog4j){
 			try {
 	            Class.forName(Slf4J_LOGGER);
 	            hasSlf4j = true;
+                System.out.println("Logger:" + Slf4J_LOGGER);
 	        } catch (Exception e) {
 	        }
         }

@@ -32,7 +32,11 @@ public class JMongoIndexesMgr {
             return;
         }
         LOGGER.debug("[EnsureIndexes] : " + key +" -> " + entityClazz.getName());
-        ds.ensureIndexes(colName,entityClazz);
+        try {
+            ds.ensureIndexes(colName, entityClazz);
+        }catch (Exception e){
+            LOGGER.warning(entityClazz.getName() + " ensureIndexes failed : " + e.getMessage());
+        }
         indexes.put(key,entityClazz);
     }
 
