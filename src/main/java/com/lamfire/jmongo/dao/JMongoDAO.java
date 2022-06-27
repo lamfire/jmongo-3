@@ -690,9 +690,21 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return ds.save(colName,entity);
     }
 
+    public <T> Iterable<Key<T>> save(final T... entities) {
+        return ds.save(entities);
+    }
+
+    public <T> Iterable<Key<T>> save(final Iterable<T>  entities) {
+        return ds.save(entities);
+    }
+
     @Override
     public Key<T> insert(T entity) {
         return ds.insert(colName,entity);
+    }
+
+    public <T> Iterable<Key<T>> insert(Iterable<T> entities) {
+        return ds.insert(colName,entities);
     }
 
     @Override

@@ -25,7 +25,13 @@ public interface DAO<T, K> {
 
 	Key<T> save(T entity);
 
+	<T> Iterable<Key<T>> save(final Iterable<T>  entities);
+
+	<T> Iterable<Key<T>> save(final T ...  entities);
+
     Key<T> insert(T entity);
+
+	<T> Iterable<Key<T>> insert(Iterable<T> entities);
 
 	Key<T> save(T entity, WriteConcern wc);
 
