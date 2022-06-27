@@ -749,6 +749,10 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return ds.update(query, ops,createIfMissing);
     }
 
+    public UpdateResults update(final Query<T> query, final Map<String,Object> fieldAndValMap) {
+        return update(query,fieldAndValMap,true,false,true);
+    }
+
     public UpdateResults update(final Query<T> query, final UpdateOperations<T> ops,boolean createIfMissing,boolean multi) {
         return ds.update(query, ops,createIfMissing,multi);
     }

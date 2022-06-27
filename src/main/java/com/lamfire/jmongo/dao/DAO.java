@@ -55,6 +55,8 @@ public interface DAO<T, K> {
 
 	UpdateResults update(Query<T> q, UpdateOperations<T> ops);
 
+	UpdateResults update(final Query<T> query, final Map<String,Object> fieldAndValMap);
+
 	UpdateResults update(Query<T> query, UpdateOperations<T> ops,boolean createIfMissing);
 
 	UpdateResults update(Query<T> query, UpdateOperations<T> ops,boolean createIfMissing,boolean multi);
