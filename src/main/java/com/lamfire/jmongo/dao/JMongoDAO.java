@@ -170,6 +170,13 @@ public class JMongoDAO<T, K> implements DAO<T, K> {
         return ds.get(colName,entityClazz, id);
     }
 
+    public T getByPrimaryOnly(final K id) {
+        Query<T> q = createQuery();
+        List<T> list = q.queryPrimaryOnly().field(Mapper.ID_KEY).equal(id).asList();
+        if(list==null || list.isEmpty())return null;
+        return list.get(0);
+    }
+
     @Override
     public T get(K id, String... fields) {
         Query<T> q = createQuery();

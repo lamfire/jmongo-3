@@ -235,6 +235,8 @@ public interface DAO<T, K> {
 
 	T get(K id);
 
+	T getByPrimaryOnly(final K id);
+
 	T get(K id, String... includeFields);
 
 	List<K> findIds(String key, Object value);

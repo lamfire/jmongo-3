@@ -25,7 +25,7 @@ public class Test {
             user.setId("user-"+i);
             user.setAge(i);
             user.setNickname("nickname-" +i);
-            dao.save(user);
+            dao.insert(user);
         }
 
         Query<User> query = dao.createQuery();
